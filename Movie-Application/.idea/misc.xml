@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Code_work/Github/Android/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/drawable/gradient_bg.xml" value="0.3705" />
+        <entry key="..\:/Code_work/Github/Android/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/drawable/ic_play_arrow.xml" value="0.3705" />
+        <entry key="..\:/Code_work/Github/Android/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_main.xml" value="0.3697916666666667" />
+        <entry key="..\:/Code_work/Github/Android/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/slide_item.xml" value="0.25" />
+        <entry key="..\:/Code_work/Github/Android/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/sliding_item.xml" value="0.3697916666666667" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout-land/activity_main.xml" value="0.31351351351351353" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout-land/activity_register.xml" value="0.4" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout-land/login_activity.xml" value="0.8" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_home_page.xml" value="0.1" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_register.xml" value="0.264" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/login_activity.xml" value="0.264" />
+        <entry key="..\:/NAM_3_2021_2022/Lap trinh di dong/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/sign_up.xml" value="0.1" />
+        <entry key="..\:/Users/Admin-s/Downloads/Compressed/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_main.xml" value="0.3278985507246377" />
+        <entry key="..\:/Users/Admin-s/Downloads/Compressed/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_register.xml" value="0.3278985507246377" />
+        <entry key="..\:/Users/Admin-s/Downloads/Compressed/movieProject/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/login_activity.xml" value="0.3278985507246377" />
+        <entry key="..\:/Y3/HK2/MobilePrograming/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/drawable/border.xml" value="0.199" />
+        <entry key="..\:/Y3/HK2/MobilePrograming/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/drawable/button_register.xml" value="0.199" />
+        <entry key="..\:/Y3/HK2/MobilePrograming/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Y3/HK2/MobilePrograming/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/sign_up.xml" value="0.22826086956521738" />
+        <entry key="..\:/Y3/HK2/MobilePrograming/Android-Movie-Application-FinalExam/Movie-Application/app/src/main/res/layout/slide_item.xml" value="0.22826086956521738" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
