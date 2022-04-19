@@ -1,31 +1,34 @@
 package com.android.movie_application.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.movie_application.SearchFragment;
+import com.android.movie_application.fragment.HomePageFragment;
+import com.android.movie_application.fragment.ProfileFragment;
 import com.android.movie_application.R;
-import com.android.movie_application.adapters.SliderPagerAdapter;
+import com.android.movie_application.fragment.SettingFragment;
+import com.android.movie_application.databinding.ActivityMainBinding;
 import com.android.movie_application.models.Slide;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Slide> listslide;
-    private ViewPager sliderpaper;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
         View decorView = getWindow().getDecorView();
+
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -34,40 +37,34 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
-        sliderpaper = findViewById(R.id.silder_paper);
 
-        listslide = new ArrayList<>();
-        listslide.add(new Slide(R.drawable.parasyte_lofi, "Slide Title \nmore text here"));
-        listslide.add(new Slide(R.drawable.one_punch_man_lofi, "Slide Title \nmore text here"));
-        listslide.add(new Slide(R.drawable.demon_slayer_lofi, "Slide Title \nmore text here"));
-        listslide.add(new Slide(R.drawable.my_hero_academy_lofi, "Slide Title \nmore text here"));
-        listslide.add(new Slide(R.drawable.fire_force_lofi, "Slide Title \nmore text here"));
-        SliderPagerAdapter adapter = new SliderPagerAdapter(this, listslide) ;
-        sliderpaper.setAdapter(adapter);
-        //Set up time for changing the theme
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new MainActivity.SliderTimer(), 2000, 4000);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomePageFragment());
+
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.home:
+                    replaceFragment(new HomePageFragment());
+                    break;
+                case R.id.search:
+                    replaceFragment(new SearchFragment());
+                    break;
+                case R.id.profile:
+                    replaceFragment(new ProfileFragment());
+                    break;
+                case R.id.setting:
+                    replaceFragment(new SettingFragment());
+                    break;
+            }
+            return true;
+        });
     }
 
-    class SliderTimer extends TimerTask {
-
-        @Override
-        public void run() {
-            MainActivity.this.runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    if(sliderpaper.getCurrentItem() < (listslide.size() - 1)){
-                        sliderpaper.setCurrentItem(sliderpaper.getCurrentItem()+1);
-                    }
-                    else
-                        sliderpaper.setCurrentItem(0);
-                }
-            });
-        }
-    }
-    public void OnClick(View view)
-    {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
