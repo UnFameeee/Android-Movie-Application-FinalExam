@@ -28,6 +28,9 @@
     <!--  Setting Fragment  -->
     <string name="title_account_setting">Account</string>
     <string name="btn_account_setting">Login or Sign Up</string>
+    <string name="title_account_version">Version</string>
+    <string name="title_account_playback">Playback</string>
+    <string name="btn_account_autoplay">Auto Play</string>
 
     <string name="watch">XEM NGAY</string>
 
