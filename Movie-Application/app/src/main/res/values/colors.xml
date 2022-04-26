@@ -18,5 +18,6 @@
     <color name="bg_button">#92A9BD</color>
     <color name="underline">#D8D6D6</color>
     <color name="yellow_primary">#FFD700</color>
+    <color name="deeppink">#FF1493</color>
 
 </resources>

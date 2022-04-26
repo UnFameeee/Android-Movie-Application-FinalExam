@@ -3,7 +3,8 @@
 
     <!--  Main layout  -->
     <string name="title_1">Top Originals and Exclusives</string>
-    <string name="sample_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptatibus nisi beatae nam eligendi, laborum tenetur ab ex quas dolorum tempore molestias non qui in commodi provident eius, natus consequuntur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel, dolorum numquam repudiandae nobis eligendi consectetur suscipit dignissimos rem eveniet eius modi in sed? Voluptates itaque officia quae perspiciatis dolores!</string>
+    <string name="sample_text">Mô Tả: Anime Demon Slayer: Thanh Gươm Diệt Quỷ còn có tên gọi khác là Lưỡi Gươm Diệt Quỷ hay Yaiba Kimetsu. Phim Thanh Gươm Diệt Quỷ: Kimetsu No Yaiba lấy bối cảnh vào thời Taisho tại Nhật Bản, có một gia đình hai anh em sống nương tựa vào nhau bằng nghề bán than. Nhưng những tháng ngày bình yên đó đã bị phá hủy khi một con quỷ sát hại cả gia đình cậu, chỉ còn duy nhất người em gái Nezuko Kamado nhưng cô lại bị biến thành quỷ. Mang trong mình quyết tâm chữa trị cho em gái, Tanjiro cùng Nezuko bắt đầu cuộc hành trình tìm kiếm tung tích con quỷ đã ra tay với gia đình mình nhằm phá giải lời nguyền. Tanjiro là một người có ý chí kiên định khi không ngừng tìm kiếm cách biến em gái trở lại làm người mặc cho những nguy hiểm chồng chất.
+</string>
 
     <!--  Sign Up  -->
     <string name="text_signin_account">Sign In</string>
@@ -27,5 +28,7 @@
     <!--  Setting Fragment  -->
     <string name="title_account_setting">Account</string>
     <string name="btn_account_setting">Login or Sign Up</string>
+
+    <string name="watch">XEM NGAY</string>
 
 </resources>
