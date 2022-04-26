@@ -2,7 +2,9 @@ package com.android.movie_application.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,5 +54,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         //setup animation
         MovieCoverImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
         play_fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
+    }
+
+    public void stream(View view)
+    {
+        Intent intent = new Intent(MovieDetailActivity.this, StreamVideoActivity.class);
+        startActivity(intent);
     }
 }

@@ -11,13 +11,14 @@
         android:id="@+id/videoViewMain"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="1dp"
@@ -29,11 +30,11 @@
             android:id="@+id/playBtn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:backgroundTint="@color/blue"
             android:text="PLAY"
-            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:backgroundTint="@color/blue"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteX="53dp"
             tools:layout_editor_absoluteY="509dp" />
@@ -46,9 +47,9 @@
             android:background="@color/blue"
             android:paddingTop="10dp"
             android:text="0:00"
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:textAlignment="center"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/playBtn"
             app:layout_constraintTop_toTopOf="parent" />
@@ -72,15 +73,157 @@
             android:background="@color/blue"
             android:paddingTop="10dp"
             android:text="01:07"
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:textAlignment="center"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/videoProgress"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="124dp"
+        android:layout_height="147dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCategory"
+        app:srcCompat="@drawable/fairy_tail" />
 
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="12dp"
+        android:text="Demon Slayer - Thanh Gươm Diệt Quỷ (2019)"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="12dp"
+        android:text="CÁC PHIM CÙNG DANH MỤC"
+        android:textColor="@color/deeppink"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/textViewMovieTitle2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="FAIRY TAIL (2017)"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="98dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/watch"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription2" />
+
+    <TextView
+        android:id="@+id/textViewDescription2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Thể loại: Hài Hước, Hành Động, Phép Thuật, Phiêu Lưu, Shounen"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMovieTitle2" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="124dp"
+        android:layout_height="147dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:srcCompat="@drawable/fire_force" />
+
+    <TextView
+        android:id="@+id/textViewTitle3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="BIỆT ĐỘI LÍNH CỨU HỎA (2019/20)"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textViewDescription3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="Thể loại: Shounen, Hành Động - Phiêu Lưu, Viễn Tưởng"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle3" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="126dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/watch"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
