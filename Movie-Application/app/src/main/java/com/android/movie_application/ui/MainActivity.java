@@ -4,21 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.android.movie_application.SearchFragment;
+import com.android.movie_application.fragment.SearchFragment;
 import com.android.movie_application.fragment.HomePageFragment;
 import com.android.movie_application.fragment.ProfileFragment;
 import com.android.movie_application.R;
 import com.android.movie_application.fragment.SettingFragment;
 import com.android.movie_application.databinding.ActivityMainBinding;
-import com.android.movie_application.models.Slide;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
