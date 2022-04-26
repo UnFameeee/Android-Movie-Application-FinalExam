@@ -14,7 +14,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_weight="1"
-        android:onClick="onClickRegister"
         android:text="@string/text_signin_account"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFB700"
