@@ -16,4 +16,7 @@
     <color name="blue">#0E3EDA</color>
     <color name="grey">#F7F7F7</color>
     <color name="bg_button">#92A9BD</color>
+    <color name="underline">#D8D6D6</color>
+    <color name="yellow_primary">#FFD700</color>
+
 </resources>

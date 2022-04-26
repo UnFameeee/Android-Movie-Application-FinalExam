@@ -24,5 +24,14 @@
 <!--            app:layout_constraintHorizontal_bias="0.0"-->
 <!--            app:layout_constraintStart_toStartOf="parent"-->
 <!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="384dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="19dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

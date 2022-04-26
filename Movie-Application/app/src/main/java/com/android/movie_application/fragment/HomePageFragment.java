@@ -1,5 +1,7 @@
 package com.android.movie_application.fragment;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,12 +12,17 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieAdapter;
+import com.android.movie_application.adapters.MovieItemClickListener;
 import com.android.movie_application.adapters.SliderPagerAdapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
+import com.android.movie_application.ui.MainActivity;
+import com.android.movie_application.ui.MovieDetailActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -23,7 +30,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomePageFragment extends Fragment {
+public class HomePageFragment extends Fragment implements MovieItemClickListener {
+
     private List<Slide> listslide;
     private ViewPager sliderpaper;
     private RecyclerView movieRV;
@@ -66,12 +74,30 @@ public class HomePageFragment extends Fragment {
         lstMovie.add(new Movie("One Punch Man", R.drawable.one_punch_man, R.drawable.one_punch_man_lofi));
         lstMovie.add(new Movie("Parasyte", R.drawable.parasyte, R.drawable.parasyte_lofi));
         lstMovie.add(new Movie("Stein Gate", R.drawable.stein_gate));
-        MovieAdapter movieAdapter = new MovieAdapter(getActivity(), lstMovie);
+        MovieAdapter movieAdapter = new MovieAdapter(getActivity(), lstMovie, HomePageFragment.this);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         // Inflate the layout for this fragment
         return view;
     }
+
+    @Override
+    public void onMovieClick(Movie movie, ImageView movieImageView) {
+        //Here we send movie information to detail activity
+        //also we ll create the transition animation between the two activity
+
+        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("imgURL", movie.getThumbnail());
+        intent.putExtra("imgCover", movie.getCoverPhoto());
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), movieImageView, "sharedName");
+
+        startActivity(intent, options.toBundle());
+
+//        Toast.makeText(getActivity(), "item clicked" + movie.getTitle(), Toast.LENGTH_LONG).show();
+    }
+
 
     class SliderTimer extends TimerTask {
 
