@@ -65,9 +65,14 @@
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:hint="First Name"
+        android:textColorHint="#494C51"
+        app:boxBackgroundColor="@color/yellow_primary"
+        app:boxStrokeColor="@color/yellow_primary"
+        app:hintTextColor="@color/yellow_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:passwordToggleTint="#FFFFFF"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -77,8 +82,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/edittext_border"
-
-            />
+            android:textCursorDrawable="@drawable/color_cursor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -86,9 +90,14 @@
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
+        android:textColorHint="#494C51"
+        app:boxBackgroundColor="@color/yellow_primary"
+        app:boxStrokeColor="@color/yellow_primary"
+        app:hintTextColor="@color/yellow_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:passwordToggleTint="#FFFFFF"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -98,7 +107,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/edittext_border"
-            android:hint="Last Name" />
+            android:hint="Last Name"
+            android:textCursorDrawable="@drawable/color_cursor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -106,9 +116,14 @@
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
+        android:textColorHint="#494C51"
+        app:boxBackgroundColor="@color/yellow_primary"
+        app:boxStrokeColor="@color/yellow_primary"
+        app:hintTextColor="@color/yellow_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:passwordToggleTint="#FFFFFF"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -118,7 +133,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/edittext_border"
-            android:hint="Email" />
+            android:hint="Email"
+            android:textCursorDrawable="@drawable/color_cursor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -126,10 +142,15 @@
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
+        android:textColorHint="#494C51"
+        app:boxBackgroundColor="@color/yellow_primary"
+        app:boxStrokeColor="@color/yellow_primary"
+        app:hintTextColor="@color/yellow_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#FFFFFF"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -141,7 +162,8 @@
             android:background="@drawable/edittext_border"
             android:hint="Password"
             android:inputType="textPassword"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/color_cursor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -149,10 +171,15 @@
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
+        android:textColorHint="#494C51"
+        app:boxBackgroundColor="@color/yellow_primary"
+        app:boxStrokeColor="@color/yellow_primary"
+        app:hintTextColor="@color/yellow_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#FFFFFF"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -163,7 +190,8 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/edittext_border"
             android:hint="Confirm Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/color_cursor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
