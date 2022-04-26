@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApplication">
         <activity
-            android:name=".ui.StreamVideoActivity"
+            android:name=".ui.MovieDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"
