@@ -16,6 +16,7 @@ import com.android.movie_application.adapters.MovieAdapter;
 import com.android.movie_application.adapters.SliderPagerAdapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class HomePageFragment extends Fragment {
     private List<Slide> listslide;
     private ViewPager sliderpaper;
     private RecyclerView movieRV;
+    private TabLayout indicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class HomePageFragment extends Fragment {
         //Set up time for changing the theme
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 2000, 4000);
+        indicator = view.findViewById(R.id.indicator);
+        indicator.setupWithViewPager(sliderpaper, true);
 
         //Recyclerview Setup
         movieRV = view.findViewById((R.id.rv_movie));
