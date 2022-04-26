@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".ui.MovieDetailActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/movie_detail_cover"
+            android:scaleType="centerCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="245dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/jujutsu_kaisen_lofi" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/gradient_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_detail_cover"
+            app:layout_constraintEnd_toEndOf="@+id/movie_detail_cover"
+            app:layout_constraintStart_toStartOf="@+id/movie_detail_cover"
+            app:layout_constraintTop_toTopOf="@+id/movie_detail_cover" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/play_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CCFFFFFF"
+            android:clickable="true"
+            android:src="@drawable/ic_play_arrow"
+            app:backgroundTint="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_detail_cover"
+            app:layout_constraintEnd_toEndOf="@+id/movie_detail_cover"
+            app:layout_constraintStart_toStartOf="@+id/movie_detail_cover"
+            app:layout_constraintTop_toTopOf="@+id/movie_detail_cover" />
+
+        <ImageView
+            android:id="@+id/movie_detail_img"
+            android:layout_width="125dp"
+            android:layout_height="175dp"
+            android:layout_marginStart="16dp"
+            android:scaleType="centerCrop"
+            android:transitionName="sharedName"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_detail_cover"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_cover"
+            app:srcCompat="@drawable/jujutsu_kaisen" />
+
+        <TextView
+            android:textColor="@color/white"
+            android:id="@+id/movie_detail_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toEndOf="@+id/movie_detail_img"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_cover" />
+
+        <TextView
+            android:id="@+id/movie_detail_desc"
+            android:textColor="@color/text_light_blue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+
+            android:text="@string/sample_text"
+            android:lineSpacingExtra="8dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_img" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

@@ -1,16 +1,31 @@
 <resources>
     <string name="app_name">finalProject</string>
+
+    <!--  Main layout  -->
     <string name="title_1">Top Originals and Exclusives</string>
-    <string name="text_checkbox"><font color='black'>I agree to the</font> <font color='blue'>Terms of Use</font> <font color='black'>and</font> <font color='blue'>Privacy Policy</font></string>
+    <string name="sample_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptatibus nisi beatae nam eligendi, laborum tenetur ab ex quas dolorum tempore molestias non qui in commodi provident eius, natus consequuntur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel, dolorum numquam repudiandae nobis eligendi consectetur suscipit dignissimos rem eveniet eius modi in sed? Voluptates itaque officia quae perspiciatis dolores!</string>
+
+    <!--  Sign Up  -->
     <string name="text_signin_account">Sign In</string>
     <string name="text_description_signin_account">Have an account?</string>
-    <string name="enter_email">Enter Email</string>
-    <string name="enter_password">Enter Password</string>
+    <string name="signup">Sign Up</string>
+
+    <!--  Sign In  -->
     <string name="login">Sign In</string>
     <string name="reset_password">Forgot Password?</string>
     <string name="donthave_account">Don\'t have an account?</string>
-    <string name="signup">Sign Up</string>
+
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo_title_text">Movie Night</string>
+
+
+    <!--  Setting Fragment  -->
+    <string name="title_account_setting">Account</string>
+    <string name="btn_account_setting">Login or Sign Up</string>
+
 </resources>
