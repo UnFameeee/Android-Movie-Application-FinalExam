@@ -31,6 +31,8 @@
     <string name="title_account_version">Version</string>
     <string name="title_account_playback">Playback</string>
     <string name="btn_account_autoplay">Auto Play</string>
+    <string name="title_account_company">Company</string>
+    <string name="btn_account_about">About</string>
 
     <string name="watch">XEM NGAY</string>
 
