@@ -7,9 +7,13 @@ public class Movie {
     private String studio;
     private String rating;
     private String streamingLink;
-    private int coverPhoto;
+    private String coverPhoto;
 
-    public Movie(String title, int thumbnail, int coverPhoto) {
+    public Movie()
+    {
+
+    }
+    public Movie(String title, int thumbnail, String coverPhoto) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
@@ -29,12 +33,18 @@ public class Movie {
         this.thumbnail = thumbnail;
     }
 
+    public Movie(String title, String coverPhoto)
+    {
+        this.title = title;
+        this.coverPhoto = coverPhoto;
+    }
 
-    public int getCoverPhoto() {
+
+    public String getCoverPhoto() {
         return coverPhoto;
     }
 
-    public void setCoverPhoto(int coverPhoto) {
+    public void setCoverPhoto(String coverPhoto) {
         this.coverPhoto = coverPhoto;
     }
 
