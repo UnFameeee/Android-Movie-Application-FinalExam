@@ -1,6 +1,7 @@
 package com.android.movie_application.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.movie_application.R;
 import com.android.movie_application.models.Movie;
+import com.bumptech.glide.Glide;
 
+import java.net.URI;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
@@ -37,7 +40,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         myViewHolder.TvTitle.setText(mData.get(position).getTitle());
-        myViewHolder.ImgMovie.setImageResource(mData.get(position).getThumbnail());
+        Uri uri = Uri.parse(mData.get(position).getCoverPhoto());
+//        myViewHolder.ImgMovie.setImageURI(uri);
+        Glide.with(context)
+                .load(uri)
+                .into(myViewHolder.ImgMovie);
     }
 
     @Override

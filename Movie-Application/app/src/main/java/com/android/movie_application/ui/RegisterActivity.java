@@ -21,7 +21,7 @@ public class RegisterActivity extends AppCompatActivity
 {
 
     private FirebaseAuth mAuth;
-    private EditText editTextFname,editTextLname,editTextEmail,editTextPass,editTextRepass;
+    private EditText editTextUsername, editTextFname,editTextLname,editTextEmail,editTextPass,editTextRepass;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity
         setContentView(R.layout.activity_register);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         editTextFname = (EditText) findViewById(R.id.editTextFname);
         editTextLname = (EditText) findViewById(R.id.editTextLname);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -43,12 +44,19 @@ public class RegisterActivity extends AppCompatActivity
 
     private void validate()
     {
-        String fname,lname,email,pass,repass;
+        String username, fname,lname,email,pass,repass;
+        username = editTextUsername.getText().toString().trim();
         fname = editTextFname.getText().toString().trim();
         lname = editTextLname.getText().toString().trim();
         email = editTextEmail.getText().toString().trim();
         pass = editTextPass.getText().toString().trim();
         repass = editTextRepass.getText().toString().trim();
+        if (username.isEmpty())
+        {
+            editTextUsername.setError("Username is strictly required!");
+            editTextUsername.requestFocus();
+            return;
+        }
         if (fname.isEmpty())
         {
             editTextFname.setError("First name is required!");
@@ -99,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity
             {
                 if (task.isSuccessful())
                 {
-                    User user = new User(fname,lname,email,pass);
+                    User user = new User(email, username, fname,lname,pass);
                     FirebaseDatabase.getInstance().getReference("Users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>()

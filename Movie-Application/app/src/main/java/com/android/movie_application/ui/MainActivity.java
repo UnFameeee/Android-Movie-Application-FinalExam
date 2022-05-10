@@ -1,5 +1,7 @@
 package com.android.movie_application.ui;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.android.movie_application.fragment.SearchFragment;
@@ -15,15 +18,28 @@ import com.android.movie_application.fragment.ProfileFragment;
 import com.android.movie_application.R;
 import com.android.movie_application.fragment.SettingFragment;
 import com.android.movie_application.databinding.ActivityMainBinding;
+import com.android.movie_application.models.Movie;
+import com.android.movie_application.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-
+    String account = "";
+    Integer count = 0;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 //        View decorView = getWindow().getDecorView();
 //
 //        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -35,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
 //                | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
 
+        //Check condition if there is an account logging in
+        if (getIntent().getStringExtra("account") != null)
+        {
+            //Set value for account
+            account = getIntent().getStringExtra("account");
+        }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomePageFragment());
@@ -48,7 +70,16 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SearchFragment());
                     break;
                 case R.id.profile:
-                    replaceFragment(new ProfileFragment());
+                    //if there is already account logging in, pass data to the profile fragment
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    if (account.length()>0)
+                        {
+                            //initialize bundle and put value then pass argument
+                            Bundle bundle = new Bundle();
+                            bundle.putString("myAccount",account);
+                            profileFragment.setArguments(bundle);
+                        }
+                    replaceFragment(profileFragment);
                     break;
                 case R.id.setting:
                     replaceFragment(new SettingFragment());
@@ -56,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
     }
 
     private void replaceFragment(Fragment fragment){
