@@ -3,6 +3,8 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdk 32
 
@@ -48,4 +50,9 @@ dependencies {
     //glide lib
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    // Add the dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-database'
 }
