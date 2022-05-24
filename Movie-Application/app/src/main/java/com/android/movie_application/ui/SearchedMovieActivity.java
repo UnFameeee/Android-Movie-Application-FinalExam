@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieItemClickListener;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SearchedMovieActivity extends AppCompatActivity {
+public class SearchedMovieActivity extends AppCompatActivity implements MovieItemClickListener {
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
@@ -53,9 +55,25 @@ public class SearchedMovieActivity extends AppCompatActivity {
 
         //Get data up from firebase and start searching for category
         getAllMovies();
-        searchedMovieAdapter = new SearchedMovieAdapter(this, lstMovieShow);
+        searchedMovieAdapter = new SearchedMovieAdapter(this, lstMovieShow, this);
         rv_searched_movie.setAdapter(searchedMovieAdapter);
         rv_searched_movie.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @Override
+    public void onMovieClick(Movie movie, ImageView movieImageView) {
+        //Here we send movie information to detail activity
+        //also we ll create the transition animation between the two activity
+        Log.d("movie cover photo: ", movie.getCoverPhoto());
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("thumbnail", movie.getThumbnail());
+        intent.putExtra("coverPhoto",movie.getCoverPhoto());
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, movieImageView, "sharedName");
+
+        startActivity(intent, options.toBundle());
+
+//        Toast.makeText(getActivity(), "item clicked" + movie.getTitle(), Toast.LENGTH_LONG).show();
     }
 
     private void getAllMovies()
