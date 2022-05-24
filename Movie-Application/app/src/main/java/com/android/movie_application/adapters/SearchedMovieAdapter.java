@@ -21,7 +21,6 @@ public class SearchedMovieAdapter extends RecyclerView.Adapter<SearchedMovieAdap
     Context context;
     List<Movie> mData;
 
-    //test
     MovieItemClickListener movieItemClickListener;
 
     public SearchedMovieAdapter(Context context, List<Movie> mData, MovieItemClickListener listener) {
@@ -29,11 +28,6 @@ public class SearchedMovieAdapter extends RecyclerView.Adapter<SearchedMovieAdap
         this.mData = mData;
         this.movieItemClickListener = listener;
     }
-
-//    public SearchedMovieAdapter(Context context, List<Movie> mData) {
-//        this.context = context;
-//        this.mData = mData;
-//    }
 
     @NonNull
     @Override

@@ -12,7 +12,9 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieItemClickListener;
@@ -35,7 +37,6 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
     //var for get movie view
-    List<Movie> lstMovie = new ArrayList<>();
     SearchedMovieAdapter searchedMovieAdapter;
     List<Movie> lstMovieShow = new ArrayList<>();
     String transferredData;
@@ -52,6 +53,10 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
         //Recyclerview Setup
         //initiate var
         RecyclerView rv_searched_movie = findViewById(R.id.rv_searched_movie);
+
+        //Change title
+        TextView title = findViewById(R.id.search_title);
+        title.setText(transferredData);
 
         //Get data up from firebase and start searching for category
         getAllMovies();
@@ -111,5 +116,10 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
 
             }
         });
+    }
+
+    //Back button
+    public void back(View view){
+        super.finish();
     }
 }

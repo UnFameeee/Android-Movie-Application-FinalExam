@@ -46,5 +46,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="policy">Khi gửi video lên Stream, bạn xác nhận rằng bạn đồng ý với Điều khoản dịch vụ và Nguyên tắc cộng đồng của Stream.</string>
+    <string name="back_btn"><![CDATA[<]]></string>
 
 </resources>
