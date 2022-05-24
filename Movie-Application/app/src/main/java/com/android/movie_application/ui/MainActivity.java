@@ -33,7 +33,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    String account = "";
+    String account = "", role = "";
     Integer count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         {
             //Set value for account
             account = getIntent().getStringExtra("account");
+            role = getIntent().getStringExtra("role");
         }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -82,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(profileFragment);
                     break;
                 case R.id.setting:
-                    replaceFragment(new SettingFragment());
+                    SettingFragment settingFragment = new SettingFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("role",role);
+                    settingFragment.setArguments(bundle);
+                    replaceFragment(settingFragment);
                     break;
             }
             return true;

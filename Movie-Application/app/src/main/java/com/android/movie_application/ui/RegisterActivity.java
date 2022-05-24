@@ -108,7 +108,8 @@ public class RegisterActivity extends AppCompatActivity
                 if (task.isSuccessful())
                 {
                     String image = "https://firebasestorage.googleapis.com/v0/b/movie-app-270d9.appspot.com/o/user-photo%2Ffd14a484f8e558209f0c2a94bc36b855.png?alt=media&token=52b0f983-95ee-47f9-a65f-246006b99850";
-                    User user = new User(email, username, fname,lname,pass,image);
+                    String role = "user";
+                    User user = new User(email, username, fname,lname,pass,image,role);
                     FirebaseDatabase.getInstance().getReference("Users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>()

@@ -2,8 +2,8 @@ package com.android.movie_application.models;
 
 public class User
 {
-    public String email, userName, firstName, lastName, password, image;
-    public User(String email, String userName, String firstName, String lastName, String password, String image)
+    public String email, userName, firstName, lastName, password, image, role;
+    public User(String email, String userName, String firstName, String lastName, String password, String image, String role)
     {
         this.email = email;
         this.userName = userName;
@@ -11,6 +11,7 @@ public class User
         this.lastName = lastName;
         this.password = password;
         this.image = image;
+        this.role = role;
     }
 
     public User(String email, String userName, String firstName, String lastName, String password)
@@ -73,5 +74,13 @@ public class User
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
