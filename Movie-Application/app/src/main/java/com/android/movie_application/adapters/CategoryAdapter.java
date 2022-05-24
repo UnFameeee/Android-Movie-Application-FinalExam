@@ -38,11 +38,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         myViewHolder.TvTitle.setText(mData.get(position).getTitle());
 //        myViewHolder.ImgMovie.setImageResource(mData.getThumbnail());
 //        mData.get(position).getThumbnail()
-        Uri uri = Uri.parse(mData.get(position).getThumbnail());
+        //Uri uri = Uri.parse(mData.get(position).getThumbnail());
 //        myViewHolder.ImgMovie.setImageURI(uri);
-        Glide.with(context)
-                .load(uri)
-                .into(myViewHolder.ImgMovie);
+       // Glide.with(context)
+                //.load(uri)
+                //.into(myViewHolder.ImgMovie);
+        myViewHolder.ImgMovie.setImageResource(Integer.parseInt(mData.get(position).getThumbnail()));
+
     }
 
     @Override

@@ -4,7 +4,7 @@ public class Movie {
     private String title;
     private String description;
     private String thumbnail;
-    private String studio;
+    private String category;
     private String rating;
     private String streamingLink;
     private String coverPhoto;
@@ -13,32 +13,36 @@ public class Movie {
     {
 
     }
+
     public Movie(String title, String thumbnail, String coverPhoto) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
     }
 
-    public Movie(String title, String description, String thumbnail, String studio, String rating, String streamingLink) {
-        this.title = title;
-        this.description = description;
-        this.thumbnail = thumbnail;
-        this.studio = studio;
-        this.rating = rating;
-        this.streamingLink = streamingLink;
-    }
 
     public Movie(String title, String thumbnail)
     {
-        this.title = title;
         this.thumbnail = thumbnail;
+        this.title = title;
     }
 
-//    public Movie(String title, String coverPhoto)
-//    {
-//        this.title = title;
-//        this.coverPhoto = coverPhoto;
-//    }
+
+    public Movie(String title, String thumbnail, String coverPhoto, String category) {
+        this.title = title;
+        this.thumbnail = thumbnail;
+        this.coverPhoto = coverPhoto;
+        this.category = category;
+    }
+
+    public Movie(String title, String description, String thumbnail, String category, String rating, String streamingLink) {
+        this.title = title;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.category = category;
+        this.rating = rating;
+        this.streamingLink = streamingLink;
+    }
 
 
     public String getCoverPhoto() {
@@ -73,12 +77,12 @@ public class Movie {
         this.thumbnail = thumbnail;
     }
 
-    public String getStudio() {
-        return studio;
+    public String getCategory() {
+        return category;
     }
 
-    public void setStudio(String studio) {
-        this.studio = studio;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getRating() {
