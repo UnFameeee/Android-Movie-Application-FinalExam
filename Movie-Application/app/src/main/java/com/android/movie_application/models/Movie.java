@@ -3,7 +3,7 @@ package com.android.movie_application.models;
 public class Movie {
     private String title;
     private String description;
-    private int thumbnail;
+    private String thumbnail;
     private String studio;
     private String rating;
     private String streamingLink;
@@ -13,13 +13,13 @@ public class Movie {
     {
 
     }
-    public Movie(String title, int thumbnail, String coverPhoto) {
+    public Movie(String title, String thumbnail, String coverPhoto) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
     }
 
-    public Movie(String title, String description, int thumbnail, String studio, String rating, String streamingLink) {
+    public Movie(String title, String description, String thumbnail, String studio, String rating, String streamingLink) {
         this.title = title;
         this.description = description;
         this.thumbnail = thumbnail;
@@ -28,16 +28,17 @@ public class Movie {
         this.streamingLink = streamingLink;
     }
 
-    public Movie(String title, int thumbnail) {
+    public Movie(String title, String thumbnail)
+    {
         this.title = title;
         this.thumbnail = thumbnail;
     }
 
-    public Movie(String title, String coverPhoto)
-    {
-        this.title = title;
-        this.coverPhoto = coverPhoto;
-    }
+//    public Movie(String title, String coverPhoto)
+//    {
+//        this.title = title;
+//        this.coverPhoto = coverPhoto;
+//    }
 
 
     public String getCoverPhoto() {
@@ -64,11 +65,11 @@ public class Movie {
         this.description = description;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 

@@ -34,12 +34,12 @@ public class SearchFragment extends Fragment {
         //Recyclerview Setup
         rv_movie_search = view.findViewById(R.id.rv_movie_search);
         List<Movie> lstMovie = new ArrayList<>();
-        lstMovie.add(new Movie("Anime", R.drawable.category_anime));
-        lstMovie.add(new Movie("Animal", R.drawable.category_anime));
-        lstMovie.add(new Movie("Science", R.drawable.category_anime));
-        lstMovie.add(new Movie("Food", R.drawable.category_anime));
-        lstMovie.add(new Movie("Documentary", R.drawable.category_anime));
-        lstMovie.add(new Movie("Popular", R.drawable.category_anime));
+//        lstMovie.add(new Movie("Anime", R.drawable.category_anime));
+//        lstMovie.add(new Movie("Animal", R.drawable.category_anime));
+//        lstMovie.add(new Movie("Science", R.drawable.category_anime));
+//        lstMovie.add(new Movie("Food", R.drawable.category_anime));
+//        lstMovie.add(new Movie("Documentary", R.drawable.category_anime));
+//        lstMovie.add(new Movie("Popular", R.drawable.category_anime));
 
         CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), lstMovie);
         rv_movie_search.setAdapter(categoryAdapter);
