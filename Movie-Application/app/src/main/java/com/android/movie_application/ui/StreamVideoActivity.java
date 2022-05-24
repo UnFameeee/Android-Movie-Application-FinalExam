@@ -31,7 +31,7 @@ public class StreamVideoActivity extends AppCompatActivity {
         currentTimer = (TextView) findViewById(R.id.currentTimer);
         durationTimer = (TextView) findViewById(R.id.durationTimer);
         videoProgress = (ProgressBar) findViewById(R.id.videoProgress);
-        videoUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/auth-android-60fc3.appspot.com/o/Demon%20Slayer%20Season%203-%20Swordsmith%20Village%20Arc%20-%20Official%20Trailer%20-%20AniTV.mp4?alt=media&token=a16495e7-5eb7-4333-b829-9fc2444f7e66");
+        videoUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/movie-app-270d9.appspot.com/o/movie-source%2FDemon%20Slayer%20Season%203-%20Swordsmith%20Village%20Arc%20-%20Official%20Trailer%20-%20AniTV.mp4?alt=media&token=6d7f44a2-e26c-4ae9-948f-a7837d674fb8");
         videoView.setVideoURI(videoUri);
         videoView.requestFocus();
         videoView.start();
