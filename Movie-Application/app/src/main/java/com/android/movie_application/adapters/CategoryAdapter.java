@@ -34,7 +34,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.MyViewHolder myViewHolder, int position) {
         myViewHolder.TvTitle.setText(mData.get(position).getTitle());
-        myViewHolder.ImgMovie.setImageResource(mData.get(position).getThumbnail());
+        myViewHolder.ImgMovie.setImageResource(Integer.parseInt(mData.get(position).getThumbnail()));
     }
 
     @Override

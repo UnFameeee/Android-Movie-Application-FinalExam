@@ -103,8 +103,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         Log.d("movie cover photo: ", movie.getCoverPhoto());
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
         intent.putExtra("title", movie.getTitle());
-//        intent.putExtra("imgURL", movie.getThumbnail());
-//        intent.putExtra("imgCover", movie.getCoverPhoto());
+        intent.putExtra("thumbnail", movie.getThumbnail());
         intent.putExtra("coverPhoto",movie.getCoverPhoto());
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), movieImageView, "sharedName");
 

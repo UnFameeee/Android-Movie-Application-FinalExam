@@ -40,7 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         myViewHolder.TvTitle.setText(mData.get(position).getTitle());
-        Uri uri = Uri.parse(mData.get(position).getCoverPhoto());
+        Uri uri = Uri.parse(mData.get(position).getThumbnail());
 //        myViewHolder.ImgMovie.setImageURI(uri);
         Glide.with(context)
                 .load(uri)

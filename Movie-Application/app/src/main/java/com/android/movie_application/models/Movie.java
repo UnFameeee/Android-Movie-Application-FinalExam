@@ -3,8 +3,8 @@ package com.android.movie_application.models;
 public class Movie {
     private String title;
     private String description;
-    private int thumbnail;
-    private String studio;
+    private String thumbnail;
+    private String category;
     private String rating;
     private String streamingLink;
     private String coverPhoto;
@@ -13,32 +13,35 @@ public class Movie {
     {
 
     }
-    public Movie(String title, int thumbnail, String coverPhoto) {
+
+    public Movie(String title, String thumbnail, String coverPhoto) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
     }
 
-    public Movie(String title, String description, int thumbnail, String studio, String rating, String streamingLink) {
+    public Movie(String title, String thumbnail)
+    {
+        this.thumbnail = thumbnail;
+        this.title = title;
+    }
+
+    public Movie(String title, String thumbnail, String coverPhoto, String category) {
+        this.title = title;
+        this.thumbnail = thumbnail;
+        this.coverPhoto = coverPhoto;
+        this.category = category;
+    }
+
+
+    public Movie(String title, String description, String thumbnail, String category, String rating, String streamingLink) {
         this.title = title;
         this.description = description;
         this.thumbnail = thumbnail;
-        this.studio = studio;
+        this.category = category;
         this.rating = rating;
         this.streamingLink = streamingLink;
     }
-
-    public Movie(String title, int thumbnail) {
-        this.title = title;
-        this.thumbnail = thumbnail;
-    }
-
-    public Movie(String title, String coverPhoto)
-    {
-        this.title = title;
-        this.coverPhoto = coverPhoto;
-    }
-
 
     public String getCoverPhoto() {
         return coverPhoto;
@@ -64,20 +67,20 @@ public class Movie {
         this.description = description;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 
-    public String getStudio() {
-        return studio;
+    public String getCategory() {
+        return category;
     }
 
-    public void setStudio(String studio) {
-        this.studio = studio;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getRating() {
