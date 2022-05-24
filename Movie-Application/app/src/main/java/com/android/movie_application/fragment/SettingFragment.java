@@ -23,7 +23,6 @@ import com.android.movie_application.ui.addNewMovie;
 public class SettingFragment extends Fragment {
 
     String role;
-    FragmentSettingBinding fragmentSettingBinding;
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);}
 
@@ -32,9 +31,6 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
-
-        //Create an object of this binding class
-        fragmentSettingBinding = FragmentSettingBinding.inflate(getLayoutInflater());
 
         TextView textView;
         textView = view.findViewById(R.id.textView14);
@@ -46,7 +42,6 @@ public class SettingFragment extends Fragment {
                startActivity(intent);
            }
        });
-
 
         return inflater.inflate(R.layout.fragment_setting, container, false);
 
