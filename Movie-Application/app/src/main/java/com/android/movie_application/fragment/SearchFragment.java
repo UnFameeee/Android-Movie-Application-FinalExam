@@ -39,6 +39,7 @@ public class SearchFragment extends Fragment {
         //Recyclerview Setup
         rv_movie_search = view.findViewById(R.id.rv_searched_movie);
         List<Movie> lstMovie = new ArrayList<>();
+
         lstMovie.add(new Movie("Anime", Integer.toString(R.drawable.category_anime)));
         lstMovie.add(new Movie("Animal", Integer.toString(R.drawable.category_anime)));
         lstMovie.add(new Movie("Science", Integer.toString(R.drawable.category_anime)));

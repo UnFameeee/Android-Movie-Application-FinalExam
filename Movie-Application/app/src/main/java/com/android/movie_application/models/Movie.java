@@ -20,11 +20,13 @@ public class Movie {
         this.coverPhoto = coverPhoto;
     }
 
+
     public Movie(String title, String thumbnail)
     {
         this.thumbnail = thumbnail;
         this.title = title;
     }
+
 
     public Movie(String title, String thumbnail, String coverPhoto, String category) {
         this.title = title;
@@ -32,7 +34,6 @@ public class Movie {
         this.coverPhoto = coverPhoto;
         this.category = category;
     }
-
 
     public Movie(String title, String description, String thumbnail, String category, String rating, String streamingLink) {
         this.title = title;
@@ -42,6 +43,7 @@ public class Movie {
         this.rating = rating;
         this.streamingLink = streamingLink;
     }
+
 
     public String getCoverPhoto() {
         return coverPhoto;
