@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom"
+        android:padding="18dp"
+        android:text="Tải video lên"
+        android:textColor="#FFB700"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="109dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="164dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_upload" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kéo và thả tệp video để tải lên"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.273" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="318dp"
+        android:layout_height="67dp"
+        android:text="@string/policy"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="648dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="352dp"
+        android:layout_height="57dp"
+        android:background="@drawable/edittext_border"
+        android:hint="Thể loại"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:textCursorDrawable="@drawable/color_cursor"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="302dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextUsername2"
+        android:layout_width="352dp"
+        android:layout_height="57dp"
+        android:background="@drawable/edittext_border"
+        android:hint="Tên phim"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:textCursorDrawable="@drawable/color_cursor"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="386dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonCreateAcc"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button_register"
+        android:backgroundTint="#FFB700"
+        android:onClick="register"
+        android:text="HOÀN TẤT"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="498dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
