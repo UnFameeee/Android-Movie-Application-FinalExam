@@ -4,9 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />-->
 
     <application
         android:allowBackup="true"
@@ -15,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApplication" >
+        <activity
+            android:name=".ui.addNewMovie"
+            android:exported="false" />
         <activity
             android:name=".ui.SearchedMovieActivity"
             android:exported="false" />
