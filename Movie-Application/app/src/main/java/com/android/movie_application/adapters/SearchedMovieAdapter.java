@@ -24,16 +24,16 @@ public class SearchedMovieAdapter extends RecyclerView.Adapter<SearchedMovieAdap
     //test
     MovieItemClickListener movieItemClickListener;
 
-//    public SearchedMovieAdapter(Context context, List<Movie> mData, MovieItemClickListener listener) {
-//        this.context = context;
-//        this.mData = mData;
-//        this.movieItemClickListener = listener;
-//    }
-
-    public SearchedMovieAdapter(Context context, List<Movie> mData) {
+    public SearchedMovieAdapter(Context context, List<Movie> mData, MovieItemClickListener listener) {
         this.context = context;
         this.mData = mData;
+        this.movieItemClickListener = listener;
     }
+
+//    public SearchedMovieAdapter(Context context, List<Movie> mData) {
+//        this.context = context;
+//        this.mData = mData;
+//    }
 
     @NonNull
     @Override
@@ -57,7 +57,7 @@ public class SearchedMovieAdapter extends RecyclerView.Adapter<SearchedMovieAdap
         return mData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tvTitle;
         private ImageView imgMovie;
 
@@ -65,6 +65,13 @@ public class SearchedMovieAdapter extends RecyclerView.Adapter<SearchedMovieAdap
             super(itemView);
             tvTitle = itemView.findViewById(R.id.movie_search_item_title);
             imgMovie = itemView.findViewById(R.id.movie_search_item_img);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    movieItemClickListener.onMovieClick(mData.get(getAdapterPosition()), imgMovie);
+                }
+            });
         }
     }
 }
