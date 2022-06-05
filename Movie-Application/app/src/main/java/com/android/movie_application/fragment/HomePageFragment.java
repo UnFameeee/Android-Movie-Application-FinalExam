@@ -26,6 +26,7 @@ import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
 import com.android.movie_application.ui.MainActivity;
 import com.android.movie_application.ui.MovieDetailActivity;
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -33,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,18 +79,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         //Recyclerview Setup
         movieRV = view.findViewById((R.id.rv_movie));
 
-//        lstMovie.add(new Movie("Demon Slayer", R.drawable.demon_slayer, R.drawable.demon_slayer_lofi));
-//        lstMovie.add(new Movie("Black Clover", R.drawable.black_clover));
-//        lstMovie.add(new Movie("Dr Stone", R.drawable.dr_stone));
-//        lstMovie.add(new Movie("Fairy Tail", R.drawable.fairy_tail));
-//        lstMovie.add(new Movie("Fire Force", R.drawable.fire_force, R.drawable.fire_force_lofi));
-//        lstMovie.add(new Movie("Sword Oratoria", R.drawable.is_it_wrong_to_try_to_pick_up_girls_in_dungeon));
-//        lstMovie.add(new Movie("Jujutsu Kaisen", R.drawable.jujutsu_kaisen, R.drawable.jujutsu_kaisen_lofi));
-//        lstMovie.add(new Movie("My Hero Academia", R.drawable.my_hero_academia, R.drawable.my_hero_academy_lofi));
-//        lstMovie.add(new Movie("One Punch Man", R.drawable.one_punch_man, R.drawable.one_punch_man_lofi));
-//        lstMovie.add(new Movie("Parasyte", R.drawable.parasyte, R.drawable.parasyte_lofi));
-//        lstMovie.add(new Movie("Stein Gate", R.drawable.stein_gate));
-        getAllMovies();
+        getAllMovies("Anime");
         movieAdapter = new MovieAdapter(getActivity(), lstMovie, HomePageFragment.this);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -114,7 +105,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
 
 
     class SliderTimer extends TimerTask {
-
         @Override
         public void run() {
             if(isAdded()){
@@ -133,40 +123,63 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     }
 
 
-    private void getAllMovies()
-    {
-        //Get reference for the Movie node
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Movie");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+//    private void getAllMovies()
+//    {
+//        //Get reference for the Movie node
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference("Movie");
+//        databaseReference.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                Movie movie = snapshot.getValue(Movie.class);
+//                lstMovie.add(movie);
+//                movieAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+
+    private void getAllMovies(String category){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Movies")
+                .child("Category").child(category);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Movie movie = snapshot.getValue(Movie.class);
-                lstMovie.add(movie);
-                movieAdapter.notifyDataSetChanged();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                    Log.d("TAG", key);
+                    assert key != null;
+                    Movie movie = ds.getValue(Movie.class);
+                    lstMovie.add(movie);
+                    movieAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
-
 
 }
