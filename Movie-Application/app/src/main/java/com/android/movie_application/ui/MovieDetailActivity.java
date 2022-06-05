@@ -37,9 +37,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         play_fab = findViewById(R.id.play_fab);
         MovieThumbnailImg = findViewById(R.id.movie_detail_img);
-//        Glide.with(this).load(imageResourceId).into(MovieThumbnailImg);
         Glide.with(this).load(movieThumbnail).into(MovieThumbnailImg);
-//        MovieThumbnailImg.setImageResource(imageResourceId);
         MovieCoverImg = findViewById(R.id.movie_detail_cover);
         Glide.with(this).load(movieCoverPhoto).into(MovieCoverImg);
         tv_title = findViewById(R.id.movie_detail_title);
@@ -49,7 +47,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         tv_description = findViewById(R.id.movie_detail_desc);
 
         //setup animation
-//        MovieCoverImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
         play_fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
     }
 

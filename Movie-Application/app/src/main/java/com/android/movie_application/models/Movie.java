@@ -1,5 +1,7 @@
 package com.android.movie_application.models;
 
+import java.util.List;
+
 public class Movie {
     private String title;
     private String description;
@@ -9,6 +11,8 @@ public class Movie {
     private String streamingLink;
     private String coverPhoto;
 
+    public List<String> chapter;
+
     public Movie()
     {
 
@@ -16,6 +20,13 @@ public class Movie {
 
     public Movie(String title, String thumbnail, String coverPhoto) {
         this.title = title;
+        this.thumbnail = thumbnail;
+        this.coverPhoto = coverPhoto;
+    }
+
+    public Movie(String title, List<String> chapter, String thumbnail, String coverPhoto) {
+        this.title = title;
+        this.chapter = chapter;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
     }
@@ -44,6 +55,13 @@ public class Movie {
         this.streamingLink = streamingLink;
     }
 
+    public List<String> getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(List<String> chapter) {
+        this.chapter = chapter;
+    }
 
     public String getCoverPhoto() {
         return coverPhoto;
