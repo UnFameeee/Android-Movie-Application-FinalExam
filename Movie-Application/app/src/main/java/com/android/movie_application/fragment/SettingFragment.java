@@ -1,24 +1,17 @@
 package com.android.movie_application.fragment;
 
-import android.app.appsearch.GetByDocumentIdRequest;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.movie_application.R;
-import com.android.movie_application.databinding.FragmentProfileBinding;
-import com.android.movie_application.databinding.FragmentSettingBinding;
-import com.android.movie_application.ui.LoginActivity;
-import com.android.movie_application.ui.MainActivity;
-import com.android.movie_application.ui.addNewMovie;
+import com.android.movie_application.ui.AddNewMovie;
 
 public class SettingFragment extends Fragment {
 
@@ -38,7 +31,7 @@ public class SettingFragment extends Fragment {
        textView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent intent = new Intent(getContext(), addNewMovie.class);
+               Intent intent = new Intent(getContext(), AddNewMovie.class);
                startActivity(intent);
            }
        });

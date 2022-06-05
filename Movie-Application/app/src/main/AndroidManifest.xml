@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApplication" >
         <activity
-            android:name=".ui.addNewMovie"
+            android:name=".ui.AddNewMovie"
             android:exported="false" />
         <activity
             android:name=".ui.SearchedMovieActivity"
