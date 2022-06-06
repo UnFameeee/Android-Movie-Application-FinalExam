@@ -87,7 +87,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     public void onMovieClick(Movie movie, ImageView movieImageView) {
         //Here we send movie information to detail activity
         //also we ll create the transition animation between the two activity
-        Log.d("movie cover photo: ", movie.getCoverPhoto());
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("thumbnail", movie.getThumbnail());
@@ -118,50 +117,9 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         }
     }
 
-
-//    private void getAllMovies()
-//    {
-//        //Get reference for the Movie node
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference("Movie");
-//        databaseReference.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                Movie movie = snapshot.getValue(Movie.class);
-//                lstMovie.add(movie);
-//                movieAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-
     private void getAllMovies(String category){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
                 .child("Category");
-//        String id = reference.push().getKey();
-//        assert id != null;
-//        reference.child(id).setValue(Category.class);
-//        System.out.println(reference);
-
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -206,3 +164,38 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         });
     }
 }
+
+//    private void getAllMovies()
+//    {
+//        //Get reference for the Movie node
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference("Movie");
+//        databaseReference.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                Movie movie = snapshot.getValue(Movie.class);
+//                lstMovie.add(movie);
+//                movieAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }

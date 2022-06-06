@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieItemClickListener;
 import com.android.movie_application.adapters.SearchedMovieAdapter;
+import com.android.movie_application.models.Category;
 import com.android.movie_application.models.Movie;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -78,24 +79,47 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
         intent.putExtra("thumbnail", movie.getThumbnail());
         intent.putExtra("coverPhoto",movie.getCoverPhoto());
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, movieImageView, "sharedName");
-
         startActivity(intent, options.toBundle());
-
 //        Toast.makeText(getActivity(), "item clicked" + movie.getTitle(), Toast.LENGTH_LONG).show();
     }
 
     private void getAllMovies(String category){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Movies")
-                .child("Category").child(category);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
+                .child("Category");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String key = ds.getKey();
+                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
+                    String key = idSnap.getKey();
                     assert key != null;
-                    Movie movie = ds.getValue(Movie.class);
-                    lstMovieShow.add(movie);
-                    searchedMovieAdapter.notifyDataSetChanged();
+                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
+                        if(Objects.equals(cateDS.getKey(), "title") && Objects.equals(cateDS.getValue(String.class), category)){
+                            for(DataSnapshot movieId : dataSnapshot.child(key).child("movies").getChildren()) {
+                                String movieKey = movieId.getKey();
+                                assert movieKey != null;
+
+                                List<String> chapter = new ArrayList<>();
+                                String coverPhoto = "", thumbnail = "", title;
+
+                                for(DataSnapshot movieDetail : dataSnapshot.child(key).child("movies").child(movieKey).getChildren()) {
+                                    for(DataSnapshot movieChapter : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").getChildren()) {
+                                        chapter.add(movieChapter.getValue(String.class));
+                                    }
+                                    if((Objects.equals(movieDetail.getKey(), "coverPhoto"))){
+                                        coverPhoto = movieDetail.getValue(String.class);
+                                    } else if((Objects.equals(movieDetail.getKey(), "thumbnail"))){
+                                        thumbnail = movieDetail.getValue(String.class);
+                                    } else if((Objects.equals(movieDetail.getKey(), "title"))){
+                                        title = movieDetail.getValue(String.class);
+                                        Movie movie = new Movie(title, chapter, thumbnail, coverPhoto);
+                                        lstMovieShow.add(movie);
+                                        searchedMovieAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
                 }
             }
 

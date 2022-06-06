@@ -21,31 +21,29 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     Context context;
     List<Category> mData;
+    CategoryItemClickListener categoryItemClickListener;
 
-    public CategoryAdapter(Context context, List<Category> mData) {
+
+    public CategoryAdapter(Context context, List<Category> mData, CategoryItemClickListener listener) {
         this.context = context;
         this.mData = mData;
+        this.categoryItemClickListener = listener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.category_item, viewGroup, false);
-        return new CategoryAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.MyViewHolder myViewHolder, int position) {
         myViewHolder.TvTitle.setText(mData.get(position).getTitle());
-//        myViewHolder.ImgMovie.setImageResource(mData.getThumbnail());
-//        mData.get(position).getThumbnail()
-        //Uri uri = Uri.parse(mData.get(position).getThumbnail());
-//        myViewHolder.ImgMovie.setImageURI(uri);
-       // Glide.with(context)
-                //.load(uri)
-                //.into(myViewHolder.ImgMovie);
-        myViewHolder.ImgMovie.setImageResource(Integer.parseInt(mData.get(position).getThumbnail()));
-
+        Uri uri = Uri.parse(mData.get(position).getThumbnail());
+        Glide.with(context)
+                .load(uri)
+                .into(myViewHolder.ImgCate);
     }
 
     @Override
@@ -56,12 +54,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView TvTitle;
-        private ImageView ImgMovie;
+        private ImageView ImgCate;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             TvTitle = itemView.findViewById(R.id.movie_item_title);
-            ImgMovie = itemView.findViewById(R.id.movie_item_img);
+            ImgCate = itemView.findViewById(R.id.movie_item_img);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    categoryItemClickListener.onCateClick(mData.get(getAdapterPosition()), ImgCate);
+                }
+            });
         }
     }
 }
