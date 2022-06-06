@@ -3,6 +3,7 @@ package com.android.movie_application.models;
 import java.util.List;
 
 public class Category {
+    private String key;
     private String title;
     private String thumbnail;
 //    private List<Movie> movies;
@@ -11,6 +12,10 @@ public class Category {
     public Category() {
     }
 
+    public Category(String key)
+    {
+        this.key = key;
+    }
     public Category(String title, String thumbnail) {
         this.title = title;
         this.thumbnail = thumbnail;
@@ -28,6 +33,11 @@ public class Category {
         this.thumbnail = thumbnail;
         this.movies = movies;
     }
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) { this.key = key; }
 
     public String getTitle() {
         return title;

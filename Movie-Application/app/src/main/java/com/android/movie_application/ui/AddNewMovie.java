@@ -15,51 +15,60 @@ import android.widget.Toast;
 
 import com.android.movie_application.R;
 import com.android.movie_application.databinding.ActivityAddMovieBinding;
+import com.android.movie_application.models.Category;
+import com.android.movie_application.models.Movie;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class AddNewMovie extends AppCompatActivity
-{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AddNewMovie extends AppCompatActivity {
     ActivityAddMovieBinding activityAddMovieBinding;
-    Uri coverUri;
-    Uri thumbnailUri;
+    Uri coverUri, thumbnailUri, videoUri;
     StorageReference storageReference;
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    EditText title, category;
-    String coverPhoto, thumbnail, sourceVideo;
+    List<Category> lstCategory = new ArrayList<>();
+    EditText editTextTitle, editTextCategory, editTextDescription;
+    String title, category, description, coverPhoto, thumbnail, streamingLink;
     ProgressDialog progressDialog;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Use view binding to create the subclass of AddNewMovie with all the view attributes
         activityAddMovieBinding = ActivityAddMovieBinding.inflate(getLayoutInflater());
         setContentView(activityAddMovieBinding.getRoot());
 
-        title = (EditText) findViewById(R.id.editTextTitle);
-        category = (EditText) findViewById(R.id.editTextCategory);
+        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+        editTextCategory = (EditText) findViewById(R.id.editTextCategory);
+        editTextDescription = (EditText) findViewById(R.id.editTextDescription);
+
 
         //Select the movie's cover photo and upload
         activityAddMovieBinding.imageViewSelectMovieCoverPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 selectCoverPhoto();
             }
         });
 
         activityAddMovieBinding.buttonUploadCoverPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 uploadCoverPhoto();
             }
         });
@@ -87,87 +96,89 @@ public class AddNewMovie extends AppCompatActivity
             }
         });
 
+        activityAddMovieBinding.buttonUploadSource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadVideo();
+            }
+        });
+
+        activityAddMovieBinding.buttonConfirmUploadMovie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                title = editTextTitle.getText().toString();
+                category = editTextCategory.getText().toString();
+                description = editTextDescription.getText().toString();
+                uploadMovieByTitle(title);
+            }
+        });
+
 
     }
 
     //Select Cover Photo from gallery
-    private void selectCoverPhoto()
-    {
+    private void selectCoverPhoto() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,100);
+        startActivityForResult(intent, 100);
     }
 
-    public void selectThumbnail()
-    {
+    public void selectThumbnail() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,200);
+        startActivityForResult(intent, 200);
     }
 
-    public void selectVideo()
-    {
+    public void selectVideo() {
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,300);
+        startActivityForResult(intent, 300);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100 && data != null && data.getData() != null)
-        {
+        if (requestCode == 100 && data != null && data.getData() != null) {
             coverUri = data.getData();
             activityAddMovieBinding.imageViewLoadCoverPhoto.setImageURI(coverUri);
-        }
-        else if(requestCode == 200 && data != null && data.getData() != null)
-        {
+        } else if (requestCode == 200 && data != null && data.getData() != null) {
             thumbnailUri = data.getData();
             activityAddMovieBinding.imageViewLoadThumbnail.setImageURI(thumbnailUri);
-        }
-        else if(requestCode == 300 && data != null && data.getData() != null)
-        {
-            thumbnailUri = data.getData();
-            activityAddMovieBinding.imageViewLoadThumbnail.setImageURI(thumbnailUri);
+        } else if (requestCode == 300 && data != null && data.getData() != null) {
+            videoUri = data.getData();
+            activityAddMovieBinding.videoViewSource.setVideoURI(videoUri);
+            activityAddMovieBinding.videoViewSource.seekTo(1000);
         }
     }
 
     //Upload Cover Photo and Thumbnail to storage in Firebase
-    public void uploadCoverPhoto()
-    {
-        String fileName = title.getText().toString();
-        if (fileName.isEmpty())
-        {
-            title.setError("Title is required!");
-            title.requestFocus();
-        }
-        else
-        {
+    public void uploadCoverPhoto() {
+        String fileName = editTextTitle.getText().toString();
+        if (fileName.isEmpty()) {
+            editTextTitle.setError("Title is required!");
+            editTextTitle.requestFocus();
+        } else {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Cover Photo....");
             progressDialog.show();
             storageReference = FirebaseStorage.getInstance().getReference("movie-coverphoto/" + fileName);
-            storageReference.putFile(coverUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
-            {
+            storageReference.putFile(coverUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                {
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(AddNewMovie.this, "Upload Cover Photo successfully!", Toast.LENGTH_SHORT).show();
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
 
-                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener( new OnCompleteListener<Uri>() {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
 
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task)
-                                {
-                                    coverPhoto = task.getResult().toString();
-                                }
-                            });
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            coverPhoto = task.getResult().toString();
+                        }
+                    });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -182,35 +193,27 @@ public class AddNewMovie extends AppCompatActivity
     }
 
 
-
-    public void uploadThumbnail()
-    {
-        String fileName = title.getText().toString();
-        if (fileName.isEmpty())
-        {
-            title.setError("Title is required!");
-            title.requestFocus();
-        }
-        else
-        {
+    public void uploadThumbnail() {
+        String fileName = editTextTitle.getText().toString();
+        if (fileName.isEmpty()) {
+            editTextTitle.setError("Title is required!");
+            editTextTitle.requestFocus();
+        } else {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Thumbnail....");
             progressDialog.show();
             storageReference = FirebaseStorage.getInstance().getReference("movie-thumbnail/" + fileName);
-            storageReference.putFile(thumbnailUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
-            {
+            storageReference.putFile(thumbnailUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                {
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(AddNewMovie.this, "Upload Thumbnail successfully!", Toast.LENGTH_SHORT).show();
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
 
-                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener( new OnCompleteListener<Uri>() {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
 
                         @Override
-                        public void onComplete(@NonNull Task<Uri> task)
-                        {
+                        public void onComplete(@NonNull Task<Uri> task) {
                             thumbnail = task.getResult().toString();
                         }
                     });
@@ -228,9 +231,105 @@ public class AddNewMovie extends AppCompatActivity
     }
 
 
+    private void uploadVideo() {
+
+        String fileName = editTextTitle.getText().toString();
+        if (fileName.isEmpty()) {
+            editTextTitle.setError("Title is required!");
+            editTextTitle.requestFocus();
+        } else {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading Video....");
+            progressDialog.show();
+            storageReference = FirebaseStorage.getInstance().getReference("movie-source/" + fileName);
+            storageReference.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(AddNewMovie.this, "Upload Video successfully!", Toast.LENGTH_SHORT).show();
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            streamingLink = task.getResult().toString();
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    Toast.makeText(AddNewMovie.this, "Failure", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
 
+    }
 
+    private void confirmUploadMovie() {
+        //create the reference to the database
+//        databaseReference = FirebaseDatabase.getInstance().getReference("Database").child("Category");
+//
+//
+//
+//        Movie movie = new Movie(title,description,coverPhoto,thumbnail,streamingLink);
+
+
+    }
+
+    private void uploadMovieByTitle(String title) {
+        Movie movie = new Movie(title, description, coverPhoto, thumbnail, streamingLink);
+        String categoryKey = "";
+        DatabaseReference dbReference;
+        dbReference = FirebaseDatabase.getInstance().getReference("Database").child("Category");
+        Query query = dbReference.orderByChild("title").equalTo(category);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String,Object> mapData = new HashMap<>();
+                mapData.put("movies",movie);
+                for(DataSnapshot dataSnapshot: snapshot.getChildren())
+                {
+                    dbReference.child(dataSnapshot.getKey()).updateChildren(mapData, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            Toast.makeText(AddNewMovie.this,"Upload Movie Successfully",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+////                for (DataSnapshot dataSnapshot: snapshot.getChildren())
+////                {
+////                        String key = dataSnapshot.getKey();
+////                        Category category = new Category(key);
+////                        lstCategory.add(category);
+////                        for(DataSnapshot categoryDetail : snapshot.child(key).getChildren())
+////                        Log.d("the category key: ", category.getKey());
+////                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+    }
 
 
 }
