@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "55905702259",
-    "project_id": "movie-app-270d9",
-    "storage_bucket": "movie-app-270d9.appspot.com"
+    "project_number": "915671855698",
+    "firebase_url": "https://movie-app-3f2fc-default-rtdb.firebaseio.com",
+    "project_id": "movie-app-3f2fc",
+    "storage_bucket": "movie-app-3f2fc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:55905702259:android:a409a9fcb642887a90f506",
+        "mobilesdk_app_id": "1:915671855698:android:63a158adde5c48c16aa58b",
         "android_client_info": {
           "package_name": "com.android.movie_application"
         }
       },
       "oauth_client": [
         {
-          "client_id": "55905702259-oskflnqdj4pe5o6tuqac96k9nbvqnk78.apps.googleusercontent.com",
+          "client_id": "915671855698-5inicdqcen844higelvgmo1odhede2tj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDbloxV7ZTwOrQGU31kti0NbA7kJ2WkmjU"
+          "current_key": "AIzaSyBzxKnaHUibwZgClptA81v7IcGs2IoxBYM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "55905702259-oskflnqdj4pe5o6tuqac96k9nbvqnk78.apps.googleusercontent.com",
+              "client_id": "915671855698-5inicdqcen844higelvgmo1odhede2tj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

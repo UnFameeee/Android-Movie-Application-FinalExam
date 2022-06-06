@@ -62,7 +62,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
-        //Slider paper and Indicator Setup
+        //Slider pager and Indicator Setup
         initiateSlider(view);
 
         //Recyclerview Setup
