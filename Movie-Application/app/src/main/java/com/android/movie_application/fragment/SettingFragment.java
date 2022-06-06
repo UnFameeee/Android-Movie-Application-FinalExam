@@ -26,11 +26,13 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
         TextView textView;
-        textView = view.findViewById(R.id.textView14);
+        textView = view.findViewById(R.id.textViewAddMovie);
 
-       textView.setOnClickListener(new View.OnClickListener() {
+       textView.setOnClickListener(new View.OnClickListener()
+       {
            @Override
-           public void onClick(View view) {
+           public void onClick(View view)
+           {
                Intent intent = new Intent(getContext(), AddNewMovie.class);
                startActivity(intent);
            }
