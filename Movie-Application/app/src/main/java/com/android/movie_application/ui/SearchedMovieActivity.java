@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +58,11 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
         //Change title
         TextView title = findViewById(R.id.search_title);
         title.setText(transferredData);
+        transferredData = transferredData.substring(0,1).toUpperCase() + transferredData.substring(1).toLowerCase();
+
 
         //Get data up from firebase and start searching for category
-        getAllMovies();
+        getAllMovies(transferredData);
         searchedMovieAdapter = new SearchedMovieAdapter(this, lstMovieShow, this);
         rv_searched_movie.setAdapter(searchedMovieAdapter);
         rv_searched_movie.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -69,7 +72,7 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
     public void onMovieClick(Movie movie, ImageView movieImageView) {
         //Here we send movie information to detail activity
         //also we ll create the transition animation between the two activity
-        Log.d("movie cover photo: ", movie.getCoverPhoto());
+//        Log.d("movie cover photo: ", movie.getCoverPhoto());
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("thumbnail", movie.getThumbnail());
@@ -81,38 +84,23 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
 //        Toast.makeText(getActivity(), "item clicked" + movie.getTitle(), Toast.LENGTH_LONG).show();
     }
 
-    private void getAllMovies()
-    {
-        //Get reference for the Movie node
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Movie");
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+    private void getAllMovies(String category){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Movies")
+                .child("Category").child(category);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Movie movie = snapshot.getValue(Movie.class);
-                if(Objects.equals(movie.getCategory(), transferredData))
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                    assert key != null;
+                    Movie movie = ds.getValue(Movie.class);
                     lstMovieShow.add(movie);
-                searchedMovieAdapter.notifyDataSetChanged();
+                    searchedMovieAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
