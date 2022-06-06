@@ -30,14 +30,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class SearchFragment extends Fragment implements CategoryItemClickListener {
 
     private RecyclerView rv_movie_search;
     CategoryAdapter categoryAdapter;
-    List<Category> lstMovie = new ArrayList<>();
+    List<Category> lstCategory = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class SearchFragment extends Fragment implements CategoryItemClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        //Recyclerview Setup
         initiateRV(view);
 
         final EditText searchText = (EditText) view.findViewById(R.id.search_input);
@@ -73,12 +76,9 @@ public class SearchFragment extends Fragment implements CategoryItemClickListene
     }
 
     private void initiateRV(View view) {
-        //Recyclerview Setup
         rv_movie_search = view.findViewById(R.id.rv_searched_movie);
-
         getAllCategory();
-
-        categoryAdapter = new CategoryAdapter(getActivity(), lstMovie, SearchFragment.this);
+        categoryAdapter = new CategoryAdapter(getActivity(), lstCategory, SearchFragment.this);
         rv_movie_search.setAdapter(categoryAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false);
         rv_movie_search.setLayoutManager(layoutManager);
@@ -86,7 +86,7 @@ public class SearchFragment extends Fragment implements CategoryItemClickListene
 
     @Override
     public void onCateClick(Category category, ImageView cateImageView){
-        //perform action
+        //Perform action
         Intent intent = new Intent(getActivity(), SearchedMovieActivity.class);
         intent.putExtra("searchValue", category.getTitle());
         startActivity(intent);
@@ -110,7 +110,8 @@ public class SearchFragment extends Fragment implements CategoryItemClickListene
                         } else if((Objects.equals(cateDS.getKey(), "title"))){
                             title = cateDS.getValue(String.class);
                             Category category = new Category(title, thumbnail);
-                            lstMovie.add(category);
+                            lstCategory.add(category);
+                            Collections.shuffle(lstCategory, new Random());
                             categoryAdapter.notifyDataSetChanged();
                         }
                     }

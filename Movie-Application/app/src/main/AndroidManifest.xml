@@ -3,8 +3,10 @@
     package="com.android.movie_application" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -15,24 +17,31 @@
         android:theme="@style/Theme.MovieApplication" >
         <activity
             android:name=".ui.AddNewMovie"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.SearchedMovieActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.MovieDetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.StreamVideoActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
