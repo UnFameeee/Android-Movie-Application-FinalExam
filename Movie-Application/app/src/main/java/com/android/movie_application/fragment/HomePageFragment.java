@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieAdapter;
@@ -24,12 +22,9 @@ import com.android.movie_application.adapters.MovieItemClickListener;
 import com.android.movie_application.adapters.SliderPagerAdapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
-import com.android.movie_application.ui.MainActivity;
 import com.android.movie_application.ui.MovieDetailActivity;
-import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -159,20 +155,48 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
 //    }
 
     private void getAllMovies(String category){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Movies")
-                .child("Category").child(category);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
+                .child("Category");
+//        String id = reference.push().getKey();
+//        assert id != null;
+//        reference.child(id).setValue(Category.class);
+//        System.out.println(reference);
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String key = ds.getKey();
-                    Log.d("TAG", key);
+                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
+                    String key = idSnap.getKey();
                     assert key != null;
-                    Movie movie = ds.getValue(Movie.class);
-                    lstMovie.add(movie);
-                    movieAdapter.notifyDataSetChanged();
-                }
+                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
+                        if(Objects.equals(cateDS.getKey(), "title") && Objects.equals(cateDS.getValue(String.class), category)){
+                            for(DataSnapshot movieId : dataSnapshot.child(key).child("movies").getChildren()) {
+                                String movieKey = movieId.getKey();
+                                assert movieKey != null;
 
+                                List<String> chapter = new ArrayList<>();
+                                String coverPhoto = "", thumbnail = "", title = "";
+
+                                for(DataSnapshot movieDetail : dataSnapshot.child(key).child("movies").child(movieKey).getChildren()) {
+
+                                    for(DataSnapshot movieChapter : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").getChildren()) {
+                                        chapter.add(movieChapter.getValue(String.class));
+                                    }
+                                    if((Objects.equals(movieDetail.getKey(), "coverPhoto"))){
+                                        coverPhoto = movieDetail.getValue(String.class);
+                                    } else if((Objects.equals(movieDetail.getKey(), "thumbnail"))){
+                                        thumbnail = movieDetail.getValue(String.class);
+                                    } else if((Objects.equals(movieDetail.getKey(), "title"))){
+                                        title = movieDetail.getValue(String.class);
+                                        Movie movie = new Movie(title, chapter, thumbnail, coverPhoto);
+                                        lstMovie.add(movie);
+                                        movieAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
@@ -181,5 +205,4 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
             }
         });
     }
-
 }

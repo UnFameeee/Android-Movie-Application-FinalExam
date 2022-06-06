@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.movie_application.R;
+import com.android.movie_application.models.Category;
 import com.android.movie_application.models.Movie;
 import com.bumptech.glide.Glide;
 
@@ -19,9 +20,9 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     Context context;
-    List<Movie> mData;
+    List<Category> mData;
 
-    public CategoryAdapter(Context context, List<Movie> mData) {
+    public CategoryAdapter(Context context, List<Category> mData) {
         this.context = context;
         this.mData = mData;
     }
