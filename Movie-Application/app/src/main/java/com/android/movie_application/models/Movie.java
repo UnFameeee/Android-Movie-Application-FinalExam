@@ -56,6 +56,16 @@ public class Movie {
 //    }
 
 
+    public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
+    {
+        this.title = title;
+        this.description = description;
+        this.coverPhoto = coverPhoto;
+        this.thumbnail = thumbnail;
+        this.streamingLink = streamingLink;
+    }
+
+
     public ArrayList<String> getChapter() {
         return chapter;
     }
