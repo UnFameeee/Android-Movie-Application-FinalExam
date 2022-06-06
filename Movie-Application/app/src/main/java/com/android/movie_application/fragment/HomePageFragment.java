@@ -175,10 +175,9 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                                 assert movieKey != null;
 
                                 List<String> chapter = new ArrayList<>();
-                                String coverPhoto, thumbnail, title;
+                                String coverPhoto = "", thumbnail = "", title;
 
                                 for(DataSnapshot movieDetail : dataSnapshot.child(key).child("movies").child(movieKey).getChildren()) {
-
                                     for(DataSnapshot movieChapter : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").getChildren()) {
                                         chapter.add(movieChapter.getValue(String.class));
                                     }
@@ -194,6 +193,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                                     }
                                 }
                             }
+                            break;
                         }
                     }
                 }
