@@ -7,79 +7,34 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.StreamVideoActivity">
 
-    <VideoView
-        android:id="@+id/videoViewMain"
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:backgroundTint="@color/black"
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/blue"
-        app:layout_constraintTop_toBottomOf="@+id/videoViewMain"
-        tools:layout_editor_absoluteX="0dp">
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/playBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/blue"
-            android:text="PLAY"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="509dp" />
+            <VideoView
+                android:id="@+id/videoViewMain"
 
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
 
-        <TextView
-            android:id="@+id/currentTimer"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:background="@color/blue"
-            android:paddingTop="10dp"
-            android:text="0:00"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/playBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/videoProgress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="190dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/currentTimer"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/durationTimer"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="0dp"
-            android:background="@color/blue"
-            android:paddingTop="10dp"
-            android:text="01:07"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/videoProgress"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+                android:backgroundTint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -96,15 +51,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="12dp"
         android:text="Demon Slayer - Thanh Gươm Diệt Quỷ (2019)"
         android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <TextView
         android:id="@+id/textViewCategory"
