@@ -1,5 +1,6 @@
 package com.android.movie_application.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
@@ -11,24 +12,32 @@ public class Movie {
     private String streamingLink;
     private String coverPhoto;
 
-    public List<String> chapter;
+    public ArrayList<String> chapter;
 
     public Movie()
     {
 
     }
 
-    public Movie(String title, String thumbnail, String coverPhoto) {
-        this.title = title;
-        this.thumbnail = thumbnail;
-        this.coverPhoto = coverPhoto;
-    }
+//    public Movie(String title, String thumbnail, String coverPhoto) {
+//        this.title = title;
+//        this.thumbnail = thumbnail;
+//        this.coverPhoto = coverPhoto;
+//    }
 
-    public Movie(String title, List<String> chapter, String thumbnail, String coverPhoto) {
+//    public Movie(String title, List<String> chapter, String thumbnail, String coverPhoto) {
+//        this.title = title;
+//        this.chapter = chapter;
+//        this.thumbnail = thumbnail;
+//        this.coverPhoto = coverPhoto;
+//    }
+
+    public Movie(String title, ArrayList<String> chapter, String thumbnail, String coverPhoto, String description) {
         this.title = title;
         this.chapter = chapter;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
+        this.description = description;
     }
 
 
@@ -39,21 +48,13 @@ public class Movie {
     }
 
 
-    public Movie(String title, String thumbnail, String coverPhoto, String category) {
-        this.title = title;
-        this.thumbnail = thumbnail;
-        this.coverPhoto = coverPhoto;
-        this.category = category;
-    }
+//    public Movie(String title, String thumbnail, String coverPhoto, String category) {
+//        this.title = title;
+//        this.thumbnail = thumbnail;
+//        this.coverPhoto = coverPhoto;
+//        this.category = category;
+//    }
 
-    public Movie(String title, String description, String thumbnail, String category, String rating, String streamingLink) {
-        this.title = title;
-        this.description = description;
-        this.thumbnail = thumbnail;
-        this.category = category;
-        this.rating = rating;
-        this.streamingLink = streamingLink;
-    }
 
     public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
     {
@@ -64,11 +65,12 @@ public class Movie {
         this.streamingLink = streamingLink;
     }
 
-    public List<String> getChapter() {
+
+    public ArrayList<String> getChapter() {
         return chapter;
     }
 
-    public void setChapter(List<String> chapter) {
+    public void setChapter(ArrayList<String> chapter) {
         this.chapter = chapter;
     }
 
