@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class AddNewMovie extends AppCompatActivity {
     ActivityAddMovieBinding activityAddMovieBinding;
@@ -45,6 +47,7 @@ public class AddNewMovie extends AppCompatActivity {
     EditText editTextTitle, editTextCategory, editTextDescription;
     String title, category, description, coverPhoto, thumbnail, streamingLink;
     ProgressDialog progressDialog;
+    String key ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,7 @@ public class AddNewMovie extends AppCompatActivity {
         activityAddMovieBinding.buttonConfirmUploadMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                key = createRandomKey();
                 title = editTextTitle.getText().toString();
                 category = editTextCategory.getText().toString();
                 description = editTextDescription.getText().toString();
@@ -164,7 +168,7 @@ public class AddNewMovie extends AppCompatActivity {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Cover Photo....");
             progressDialog.show();
-            storageReference = FirebaseStorage.getInstance().getReference("movie-coverphoto/" + fileName);
+            storageReference = FirebaseStorage.getInstance().getReference("movie/coverPhoto/" + fileName);
             storageReference.putFile(coverUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -202,7 +206,7 @@ public class AddNewMovie extends AppCompatActivity {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Thumbnail....");
             progressDialog.show();
-            storageReference = FirebaseStorage.getInstance().getReference("movie-thumbnail/" + fileName);
+            storageReference = FirebaseStorage.getInstance().getReference("movie/thumbnail/" + fileName);
             storageReference.putFile(thumbnailUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -241,7 +245,7 @@ public class AddNewMovie extends AppCompatActivity {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Video....");
             progressDialog.show();
-            storageReference = FirebaseStorage.getInstance().getReference("movie-source/" + fileName);
+            storageReference = FirebaseStorage.getInstance().getReference("movie/source/" + fileName);
             storageReference.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -330,6 +334,45 @@ public class AddNewMovie extends AppCompatActivity {
 //            }
 //        });
     }
+
+    public String createRandomKey()
+    {
+        // create a string of uppercase and lowercase characters and numbers
+        String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+
+        // combine all strings
+        String alphaNumeric = upperAlphabet + lowerAlphabet + numbers;
+
+        // create random string builder
+        StringBuilder sb = new StringBuilder();
+
+        // create an object of Random class
+        Random random = new Random();
+
+        // specify length of random string
+        int length = 10;
+
+        for(int i = 0; i < length; i++) {
+
+            // generate random index number
+            int index = random.nextInt(alphaNumeric.length());
+
+            // get character specified by index
+            // from the string
+            char randomChar = alphaNumeric.charAt(index);
+
+            // append the character to string builder
+            sb.append(randomChar);
+        }
+
+        String randomString = sb.toString();
+//        System.out.println("Random String is: " + randomString);
+        return randomString;
+    }
+
+
 
 
 }
