@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment
     TextView textViewUsername, textViewAccount,textViewFirstName,textViewLastName,textViewPassword;
     EditText editTextUsername;
     ImageView imageView;
-    Button btnEditProfile;
+    Button btnEditProfile, btnEditFirstname, btnEditLastName, btnEditPassword;
     String userName, firstName, lastName, email, password;
 
     public ProfileFragment() {
@@ -79,6 +79,9 @@ public class ProfileFragment extends Fragment
         textViewLastName = view.findViewById(R.id.textViewLastNameInput);
         textViewPassword = view.findViewById(R.id.textViewPasswordInput);
         btnEditProfile = view.findViewById(R.id.btn_account_edit_username);
+        btnEditFirstname = view.findViewById(R.id.btn_account_edit_firstname);
+        btnEditLastName = view.findViewById(R.id.btn_account_edit_lastname);
+        btnEditPassword = view.findViewById(R.id.btn_account_edit_password);
         imageView = view.findViewById(R.id.imageViewAvatar);
 
         //Check condition if there is an account logging in and retrieve data
@@ -102,8 +105,27 @@ public class ProfileFragment extends Fragment
             }
         });
 
+        btnEditFirstname.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                firstName = btnEditFirstname.getText().toString();
+                databaseReference.child(firebaseAuth.getUid()).child("firstName").setValue(firstName);
+                Toast.makeText(getActivity(),"Update First Name successfully",Toast.LENGTH_SHORT).show();
+                btnEditFirstname.setText(firstName);
+            }
+        });
+
+
+
+
+
+
+
         return view;
     }
+
 
     //Get the document of the Users node with email parameter
     public void getUserByEmail(String email)

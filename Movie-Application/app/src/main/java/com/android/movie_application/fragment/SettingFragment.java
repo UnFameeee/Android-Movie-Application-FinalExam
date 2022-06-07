@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import com.android.movie_application.ui.AddNewMovie;
 
 public class SettingFragment extends Fragment {
 
-    String role;
+    String role ="";
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);}
 
@@ -25,10 +26,25 @@ public class SettingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        TextView textView;
-        textView = view.findViewById(R.id.textViewAddMovie);
+        TextView textViewAddMovie, textViewAddCategory, textViewAddChapter;
+        textViewAddMovie = (TextView) view.findViewById(R.id.textViewAddMovie);
+        textViewAddCategory = (TextView) view.findViewById(R.id.textViewAddCategory);
+        textViewAddChapter = (TextView) view.findViewById(R.id.textViewAddChapter);
+        textViewAddMovie.setVisibility(View.INVISIBLE);
+        textViewAddCategory.setVisibility(View.INVISIBLE);
+        textViewAddChapter.setVisibility(View.INVISIBLE);
+        if (getArguments() != null)
+        {
+            role = getArguments().getString("role");
+        }
+        if (role.equals("admin"))
+        {
+            textViewAddMovie.setVisibility(View.VISIBLE);
+            textViewAddCategory.setVisibility(View.VISIBLE);
+            textViewAddChapter.setVisibility(View.VISIBLE);
+        }
 
-       textView.setOnClickListener(new View.OnClickListener()
+        textViewAddMovie.setOnClickListener(new View.OnClickListener()
        {
            @Override
            public void onClick(View view)
@@ -38,7 +54,8 @@ public class SettingFragment extends Fragment {
            }
        });
 
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+//        return inflater.inflate(R.layout.fragment_setting, container, false);
+        return view;
 
     }
 }

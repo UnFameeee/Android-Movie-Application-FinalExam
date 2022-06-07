@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ public class RegisterActivity extends AppCompatActivity
 
     private FirebaseAuth mAuth;
     private EditText editTextUsername, editTextFname,editTextLname,editTextEmail,editTextPass,editTextRepass;
+    RadioButton radioButtonUser, radioButtonAdmin;
+    String role;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPass = (EditText) findViewById(R.id.editTextPass);
         editTextRepass = (EditText) findViewById(R.id.editTextRepass);
+        radioButtonAdmin = (RadioButton) findViewById(R.id.radioButtonAdmin);
+        radioButtonUser = (RadioButton) findViewById(R.id.radioButtonUser);
     }
 
     public void register(View view)
@@ -99,6 +104,19 @@ public class RegisterActivity extends AppCompatActivity
             editTextEmail.requestFocus();
             return;
         }
+        if (radioButtonUser.isChecked())
+        {
+            role = "user";
+        }
+        else if (radioButtonAdmin.isChecked())
+        {
+            role = "admin";
+        }
+        else
+        {
+            Toast.makeText(RegisterActivity.this,"Role is empty",Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>()
         {
@@ -108,7 +126,6 @@ public class RegisterActivity extends AppCompatActivity
                 if (task.isSuccessful())
                 {
                     String image = "https://firebasestorage.googleapis.com/v0/b/movie-app-270d9.appspot.com/o/user-photo%2Ffd14a484f8e558209f0c2a94bc36b855.png?alt=media&token=52b0f983-95ee-47f9-a65f-246006b99850";
-                    String role = "user";
                     User user = new User(email, username, fname,lname,pass,image,role);
                     FirebaseDatabase.getInstance().getReference("Users")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
