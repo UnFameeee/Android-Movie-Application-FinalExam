@@ -12,29 +12,27 @@ public class Movie {
     private String streamingLink;
     private String coverPhoto;
 
-    public ArrayList<String> chapter;
+    public ArrayList<String> chapters;
+    public ArrayList<Chapter> chapter;
+
+
 
     public Movie()
     {
 
     }
 
-//    public Movie(String title, String thumbnail, String coverPhoto) {
-//        this.title = title;
-//        this.thumbnail = thumbnail;
-//        this.coverPhoto = coverPhoto;
-//    }
-
-//    public Movie(String title, List<String> chapter, String thumbnail, String coverPhoto) {
-//        this.title = title;
-//        this.chapter = chapter;
-//        this.thumbnail = thumbnail;
-//        this.coverPhoto = coverPhoto;
-//    }
-
-    public Movie(String title, ArrayList<String> chapter, String thumbnail, String coverPhoto, String description) {
+    public Movie(String title, String thumbnail, String coverPhoto, String description, ArrayList<Chapter> chapter) {
         this.title = title;
         this.chapter = chapter;
+        this.thumbnail = thumbnail;
+        this.coverPhoto = coverPhoto;
+        this.description = description;
+    }
+
+    public Movie(String title, ArrayList<String> chapters, String thumbnail, String coverPhoto, String description) {
+        this.title = title;
+        this.chapters = chapters;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
         this.description = description;
@@ -48,22 +46,6 @@ public class Movie {
     }
 
 
-//    public Movie(String title, String thumbnail, String coverPhoto, String category) {
-//        this.title = title;
-//        this.thumbnail = thumbnail;
-//        this.coverPhoto = coverPhoto;
-//        this.category = category;
-//    }
-
-    public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
-    {
-        this.title = title;
-        this.description = description;
-        this.coverPhoto = coverPhoto;
-        this.thumbnail = thumbnail;
-        this.streamingLink = streamingLink;
-    }
-
     public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
     {
         this.title = title;
@@ -74,11 +56,21 @@ public class Movie {
     }
 
 
-    public ArrayList<String> getChapter() {
+
+
+    public ArrayList<String> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(ArrayList<String> chapter) {
+        this.chapters = chapter;
+    }
+
+    public ArrayList<Chapter> getChapter() {
         return chapter;
     }
 
-    public void setChapter(ArrayList<String> chapter) {
+    public void setChapter(ArrayList<Chapter> chapter) {
         this.chapter = chapter;
     }
 

@@ -21,18 +21,6 @@ public class Category {
         this.thumbnail = thumbnail;
     }
 
-//    public Category(String title, String thumbnail, List<Movie> movies) {
-//        this.title = title;
-//        this.thumbnail = thumbnail;
-//        this.movies = movies;
-//    }
-
-
-    public Category(String title, String thumbnail, String movies) {
-        this.title = title;
-        this.thumbnail = thumbnail;
-        this.movies = movies;
-    }
     public String getKey() {
         return key;
     }
@@ -54,15 +42,6 @@ public class Category {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
-
-//    public List<Movie> getMovies() {
-//        return movies;
-//    }
-//
-//    public void setMovies(List<Movie> movies) {
-//        this.movies = movies;
-//    }
-
 
     public String getMovies() {
         return movies;

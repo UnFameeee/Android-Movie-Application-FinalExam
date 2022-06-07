@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.movie_application.R;
+import com.android.movie_application.models.Chapter;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -22,7 +23,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView tv_title, tv_description;
     private FloatingActionButton play_fab;
     private String movieTitle, movieCoverPhoto, movieThumbnail, movieDescription;
-    private ArrayList<String> chapter;
+    private ArrayList<Chapter> chaplist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +41,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieCoverPhoto = getIntent().getExtras().getString("coverPhoto");
         movieThumbnail = getIntent().getExtras().getString("thumbnail");
         movieDescription = getIntent().getExtras().getString("description");
-        chapter = getIntent().getExtras().getStringArrayList("chapter");
+//        ArrayList<Chapter> chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
+        chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
 
-        System.out.println(chapter);
+        for(int i = 0; i < chaplist.size(); ++i){
+            System.out.println(chaplist.get(i).getTitle());
+        }
 
         play_fab = findViewById(R.id.play_fab);
         MovieThumbnailImg = findViewById(R.id.movie_detail_img);
@@ -62,7 +66,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     public void stream(View view)
     {
         Intent intent = new Intent(MovieDetailActivity.this, StreamVideoActivity.class);
-        intent.putExtra("chapter", (Serializable) chapter);
+        intent.putExtra("chapterList", chaplist);
         startActivity(intent);
     }
 

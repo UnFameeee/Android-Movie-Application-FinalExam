@@ -21,6 +21,7 @@ import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieAdapter;
 import com.android.movie_application.adapters.MovieItemClickListener;
 import com.android.movie_application.adapters.SliderPagerAdapter;
+import com.android.movie_application.models.Chapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
 import com.android.movie_application.ui.MovieDetailActivity;
@@ -33,10 +34,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -143,14 +146,19 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         //Here we send movie information to detail activity
         //also we ll create the transition animation between the two activity
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        Bundle args = new Bundle();
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("thumbnail", movie.getThumbnail());
         intent.putExtra("coverPhoto",movie.getCoverPhoto());
         intent.putExtra("description", movie.getDescription());
-        intent.putExtra("chapter",(Serializable) movie.getChapter());
+
+        ArrayList<Chapter> chapList = movie.getChapter();
+        intent.putExtra("chapterList", chapList);
 
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), movieImageView, "sharedName");
         startActivity(intent, options.toBundle());
+
+//        startActivity(intent);
 //        Toast.makeText(getActivity(), "item clicked" + movie.getTitle(), Toast.LENGTH_LONG).show();
     }
 
@@ -169,14 +177,28 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                                 String movieKey = movieId.getKey();
                                 assert movieKey != null;
 
-                                ArrayList<String> chapter = new ArrayList<>();
+                                ArrayList<Chapter> chapterList = new ArrayList<>();
                                 String coverPhoto = "", description = "", thumbnail = "", title;
 
                                 for(DataSnapshot movieDetail : dataSnapshot.child(key).child("movies").child(movieKey).getChildren()) {
 
                                     if((Objects.equals(movieDetail.getKey(), "chapter"))){
                                         for(DataSnapshot movieChapter : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").getChildren()) {
-                                            chapter.add(movieChapter.getValue(String.class));
+                                            String chapterKey = movieChapter.getKey();
+                                            assert chapterKey != null;
+
+                                            String chapterTitle = "", chapterThumbnail = "", chapterData = "";
+                                            for(DataSnapshot chapterDetail : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").child(chapterKey).getChildren()) {
+
+                                                if((Objects.equals(chapterDetail.getKey(), "data"))){
+                                                    chapterData = chapterDetail.getValue(String.class);
+                                                }else if((Objects.equals(chapterDetail.getKey(), "thumbnail"))) {
+                                                    chapterThumbnail = chapterDetail.getValue(String.class);
+                                                }else if((Objects.equals(chapterDetail.getKey(), "title"))) {
+                                                    chapterTitle = chapterDetail.getValue(String.class);
+                                                }
+                                            }
+                                            chapterList.add(new Chapter(chapterTitle, chapterThumbnail, chapterData));
                                         }
                                     } else if((Objects.equals(movieDetail.getKey(), "coverPhoto"))){
                                         coverPhoto = movieDetail.getValue(String.class);
@@ -186,7 +208,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                                         thumbnail = movieDetail.getValue(String.class);
                                     } else if((Objects.equals(movieDetail.getKey(), "title"))){
                                         title = movieDetail.getValue(String.class);
-                                        Movie movie = new Movie(title, chapter, thumbnail, coverPhoto, description);
+                                        Movie movie = new Movie(title, thumbnail, coverPhoto, description, chapterList);
                                         lstMovie.add(movie);
                                         Collections.shuffle(lstMovie, new Random());
                                         movieAdapter.notifyDataSetChanged();
