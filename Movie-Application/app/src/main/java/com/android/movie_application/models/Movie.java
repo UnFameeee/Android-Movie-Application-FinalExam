@@ -45,6 +45,7 @@ public class Movie {
         this.title = title;
     }
 
+
     public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
     {
         this.title = title;
