@@ -72,6 +72,7 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
         //also we ll create the transition animation between the two activity
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra("title", movie.getTitle());
+        intent.putExtra("category", movie.getCategory());
         intent.putExtra("thumbnail", movie.getThumbnail());
         intent.putExtra("coverPhoto",movie.getCoverPhoto());
         intent.putExtra("description", movie.getDescription());
@@ -93,6 +94,7 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
                     assert key != null;
                     for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
                         if(Objects.equals(cateDS.getKey(), "title") && Objects.equals(cateDS.getValue(String.class), category)){
+                            String category = cateDS.getValue(String.class);
                             for(DataSnapshot movieId : dataSnapshot.child(key).child("movies").getChildren()) {
                                 String movieKey = movieId.getKey();
                                 assert movieKey != null;
@@ -128,7 +130,7 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
                                         thumbnail = movieDetail.getValue(String.class);
                                     } else if((Objects.equals(movieDetail.getKey(), "title"))){
                                         title = movieDetail.getValue(String.class);
-                                        Movie movie = new Movie(title, thumbnail, coverPhoto, description, chapterList);
+                                        Movie movie = new Movie(title, category, thumbnail, coverPhoto, description, chapterList);
                                         lstMovieShow.add(movie);
                                         Collections.shuffle(lstMovieShow, new Random());
                                         searchedMovieAdapter.notifyDataSetChanged();

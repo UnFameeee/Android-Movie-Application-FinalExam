@@ -12,27 +12,25 @@ public class Movie {
     private String streamingLink;
     private String coverPhoto;
 
-    public ArrayList<String> chapters;
     public ArrayList<Chapter> chapter;
-
-
 
     public Movie()
     {
 
     }
 
-    public Movie(String title, String thumbnail, String coverPhoto, String description, ArrayList<Chapter> chapter) {
-        this.title = title;
-        this.chapter = chapter;
-        this.thumbnail = thumbnail;
-        this.coverPhoto = coverPhoto;
-        this.description = description;
-    }
+//    public Movie(String title, String thumbnail, String coverPhoto, String description, ArrayList<Chapter> chapter) {
+//        this.title = title;
+//        this.chapter = chapter;
+//        this.thumbnail = thumbnail;
+//        this.coverPhoto = coverPhoto;
+//        this.description = description;
+//    }
 
-    public Movie(String title, ArrayList<String> chapters, String thumbnail, String coverPhoto, String description) {
+    public Movie(String title, String category, String thumbnail, String coverPhoto, String description, ArrayList<Chapter> chapter) {
         this.title = title;
-        this.chapters = chapters;
+        this.category = category;
+        this.chapter = chapter;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
         this.description = description;
@@ -53,17 +51,6 @@ public class Movie {
         this.coverPhoto = coverPhoto;
         this.thumbnail = thumbnail;
         this.streamingLink = streamingLink;
-    }
-
-
-
-
-    public ArrayList<String> getChapters() {
-        return chapters;
-    }
-
-    public void setChapters(ArrayList<String> chapter) {
-        this.chapters = chapter;
     }
 
     public ArrayList<Chapter> getChapter() {

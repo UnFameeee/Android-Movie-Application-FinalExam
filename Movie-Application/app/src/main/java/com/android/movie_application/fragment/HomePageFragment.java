@@ -1,6 +1,5 @@
 package com.android.movie_application.fragment;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,36 +9,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieAdapter;
 import com.android.movie_application.adapters.MovieItemClickListener;
 import com.android.movie_application.adapters.SliderPagerAdapter;
+import com.android.movie_application.models.Category;
 import com.android.movie_application.models.Chapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
 import com.android.movie_application.ui.MovieDetailActivity;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,6 +48,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     List<Movie> lstMovie = new ArrayList<>();
     List<Movie> lstMovie2 = new ArrayList<>();
     List<Movie> lstMovie3 = new ArrayList<>();
+    List<Category> lstCategory = new ArrayList<>();
     MovieAdapter movieAdapter;
     MovieAdapter movie2Adapter;
     MovieAdapter movie3Adapter;
@@ -64,6 +61,8 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
+
+//        getAllCategory();
 
         //Slider pager and Indicator Setup
         initiateSlider(view);
@@ -119,15 +118,19 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
 
     private void initiateRV1(View view) {
         RecyclerView movieRV = view.findViewById((R.id.rv_movie));
-        getAllMovies("Anime", lstMovie);
-        movieAdapter = new MovieAdapter(getActivity(), lstMovie, HomePageFragment.this);
+        ArrayList<String> cate = new ArrayList<>(Arrays.asList("Anime", "Lofi", "Gamejams", "Devlog", "Review"));
+        Collections.shuffle(cate, new Random());
+        TextView tv =  view.findViewById(R.id.tvCate);
+        tv.setText(cate.get(0));
+        getAllMoviesByCate(cate.get(0), lstMovie);
+        movieAdapter = new MovieAdapter(getActivity(), lstMovie,HomePageFragment.this);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void initiateRV2(View view) {
         RecyclerView movieRV2 = view.findViewById((R.id.rv_movie2));
-        getAllMovies("Anime", lstMovie2);
+        getAllMovies(lstMovie2);
         movie2Adapter = new MovieAdapter(getActivity(), lstMovie2, HomePageFragment.this);
         movieRV2.setAdapter(movie2Adapter);
         movieRV2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -135,7 +138,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
 
     private void initiateRV3(View view) {
         RecyclerView movieRV3 = view.findViewById((R.id.rv_movie3));
-        getAllMovies("Anime", lstMovie3);
+        getAllMovies(lstMovie3);
         movie3Adapter = new MovieAdapter(getActivity(), lstMovie3, HomePageFragment.this);
         movieRV3.setAdapter(movie3Adapter);
         movieRV3.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -146,23 +149,19 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         //Here we send movie information to detail activity
         //also we ll create the transition animation between the two activity
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-        Bundle args = new Bundle();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("title", movie.getTitle());
+        intent.putExtra("category", movie.getCategory());
         intent.putExtra("thumbnail", movie.getThumbnail());
         intent.putExtra("coverPhoto",movie.getCoverPhoto());
         intent.putExtra("description", movie.getDescription());
 
         ArrayList<Chapter> chapList = movie.getChapter();
         intent.putExtra("chapterList", chapList);
-
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), movieImageView, "sharedName");
-        startActivity(intent, options.toBundle());
-
-//        startActivity(intent);
-//        Toast.makeText(getActivity(), "item clicked" + movie.getTitle(), Toast.LENGTH_LONG).show();
+        startActivity(intent);
     }
 
-    private void getAllMovies(String category, List<Movie> lstMovie){
+    private void getAllMoviesByCate(String category, List<Movie> lstMovie){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
                 .child("Category");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,6 +172,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                     assert key != null;
                     for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
                         if(Objects.equals(cateDS.getKey(), "title") && Objects.equals(cateDS.getValue(String.class), category)){
+                            String category = cateDS.getValue(String.class);
                             for(DataSnapshot movieId : dataSnapshot.child(key).child("movies").getChildren()) {
                                 String movieKey = movieId.getKey();
                                 assert movieKey != null;
@@ -208,9 +208,10 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                                         thumbnail = movieDetail.getValue(String.class);
                                     } else if((Objects.equals(movieDetail.getKey(), "title"))){
                                         title = movieDetail.getValue(String.class);
-                                        Movie movie = new Movie(title, thumbnail, coverPhoto, description, chapterList);
+                                        Movie movie = new Movie(title, category,thumbnail, coverPhoto, description, chapterList);
                                         lstMovie.add(movie);
                                         Collections.shuffle(lstMovie, new Random());
+
                                         movieAdapter.notifyDataSetChanged();
                                     }
                                 }
@@ -227,43 +228,111 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
             }
         });
     }
-}
 
-
-//    FirebaseDatabase firebaseDatabase;
-//    FirebaseAuth firebaseAuth;
-//    DatabaseReference databaseReference;
-//    private void getAllMovies()
-//    {
-//        //Get reference for the Movie node
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference("Movie");
-//        databaseReference.addChildEventListener(new ChildEventListener() {
+//    private void getAllCategory(){
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
+//                .child("Category");
+//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                Movie movie = snapshot.getValue(Movie.class);
-//                lstMovie.add(movie);
-//                movieAdapter.notifyDataSetChanged();
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
+//                    String key = idSnap.getKey();
+//                    assert key != null;
+//
+//                    String thumbnail = "", title;
+//
+//                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
+//                        if((Objects.equals(cateDS.getKey(), "thumbnail"))){
+//                            thumbnail = cateDS.getValue(String.class);
+//                        } else if((Objects.equals(cateDS.getKey(), "title"))){
+//                            title = cateDS.getValue(String.class);
+//                            Category category = new Category(title, thumbnail);
+//                            lstCategory.add(category);
+//                            Collections.shuffle(lstCategory, new Random());
+//                        }
+//                    }
+//                }
+////                try {
+////
+////                    refresh.call();
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
 //            }
 //
 //            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
+//            public void onCancelled(DatabaseError databaseError) {
 //
 //            }
 //        });
 //    }
+
+    private void getAllMovies(List<Movie> lstMovie){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
+                .child("Category");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
+                    String key = idSnap.getKey();
+                    assert key != null;
+                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
+                        if(Objects.equals(cateDS.getKey(), "title") ){
+                            String category = cateDS.getValue(String.class);
+                            for(DataSnapshot movieId : dataSnapshot.child(key).child("movies").getChildren()) {
+                                String movieKey = movieId.getKey();
+                                assert movieKey != null;
+
+                                ArrayList<Chapter> chapterList = new ArrayList<>();
+                                String coverPhoto = "", description = "", thumbnail = "", title;
+
+                                for(DataSnapshot movieDetail : dataSnapshot.child(key).child("movies").child(movieKey).getChildren()) {
+                                    if((Objects.equals(movieDetail.getKey(), "chapter"))){
+                                        for(DataSnapshot movieChapter : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").getChildren()) {
+                                            String chapterKey = movieChapter.getKey();
+                                            assert chapterKey != null;
+
+                                            String chapterTitle = "", chapterThumbnail = "", chapterData = "";
+                                            for(DataSnapshot chapterDetail : dataSnapshot.child(key).child("movies").child(movieKey).child("chapter").child(chapterKey).getChildren()) {
+
+                                                if((Objects.equals(chapterDetail.getKey(), "data"))){
+                                                    chapterData = chapterDetail.getValue(String.class);
+                                                }else if((Objects.equals(chapterDetail.getKey(), "thumbnail"))) {
+                                                    chapterThumbnail = chapterDetail.getValue(String.class);
+                                                }else if((Objects.equals(chapterDetail.getKey(), "title"))) {
+                                                    chapterTitle = chapterDetail.getValue(String.class);
+                                                }
+                                            }
+                                            chapterList.add(new Chapter(chapterTitle, chapterThumbnail, chapterData));
+                                        }
+                                    } else if((Objects.equals(movieDetail.getKey(), "coverPhoto"))){
+                                        coverPhoto = movieDetail.getValue(String.class);
+                                    }else if((Objects.equals(movieDetail.getKey(), "description"))) {
+                                        description = movieDetail.getValue(String.class);
+                                    }else if((Objects.equals(movieDetail.getKey(), "thumbnail"))){
+                                        thumbnail = movieDetail.getValue(String.class);
+                                    } else if((Objects.equals(movieDetail.getKey(), "title"))){
+                                        title = movieDetail.getValue(String.class);
+                                        Movie movie = new Movie(title, category, thumbnail, coverPhoto, description, chapterList);
+                                        lstMovie.add(movie);
+
+                                        Collections.shuffle(lstMovie, new Random());
+                                        movie2Adapter.notifyDataSetChanged();
+                                        movie3Adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+}

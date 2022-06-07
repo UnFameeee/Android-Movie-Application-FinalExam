@@ -2,28 +2,29 @@ package com.android.movie_application.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.android.movie_application.R;
-import com.android.movie_application.adapters.CategoryAdapter;
 import com.android.movie_application.adapters.ChapterAdapter;
-import com.android.movie_application.fragment.SearchFragment;
+import com.android.movie_application.adapters.ChapterItemClickListener;
 import com.android.movie_application.models.Chapter;
 
 import java.util.ArrayList;
 
-public class StreamVideoActivity extends AppCompatActivity {
+public class StreamVideoActivity extends AppCompatActivity implements ChapterItemClickListener {
 
     private VideoView videoView;
+    ArrayList<Chapter> chaplist;
     int chapterPointer = 0;
 
     @Override
@@ -32,39 +33,46 @@ public class StreamVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stream_video_activity);
 
-        ArrayList<Chapter> chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
+        chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
+        System.out.println(chaplist.get(0).getTitle());
+        String movieName = getIntent().getExtras().getString("movieTitle");
 
-        initiateRV(chaplist);
+        initiateRV(chaplist, 0);
+
+        TextView movieTitle = findViewById(R.id.textViewTitle);
+        movieTitle.setText(movieName);
 
         videoView = findViewById(R.id.videoViewMain);
 
-//        String videoPath = chapter.get(0);
-//        videoView.setVideoPath(videoPath);
+        String videoPath = chaplist.get(0).getData();
+        videoView.setVideoPath(videoPath);
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
 
         mediaController.setPrevNextListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(chapterPointer < chapter.size()-1){
-//                    videoView.setVisibility(View.GONE);
-//                    chapterPointer++;
-//                    videoView.setVisibility(View.VISIBLE);
-//                    videoView.setVideoPath(chapter.get(chapterPointer));
-//                    videoView.start();
-//                }
+                if(chapterPointer < chaplist.size()-1){
+                    videoView.setVisibility(View.GONE);
+                    chapterPointer++;
+                    initiateRV(chaplist, chapterPointer);
+                    videoView.setVisibility(View.VISIBLE);
+                    videoView.setVideoPath(chaplist.get(chapterPointer).getData());
+                    videoView.start();
+                }
                 //Handle next click here
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(chapterPointer > 0){
-//                    videoView.setVisibility(View.GONE);
-//                    chapterPointer--;
-//                    videoView.setVisibility(View.VISIBLE);
-//                    videoView.setVideoPath(chapter.get(chapterPointer));
-//                    videoView.start();
-//                }
+                if(chapterPointer > 0){
+                    videoView.setVisibility(View.GONE);
+                    chapterPointer--;
+                    initiateRV(chaplist, chapterPointer);
+                    videoView.setVisibility(View.VISIBLE);
+                    videoView.setVideoPath(chaplist.get(chapterPointer).getData());
+                    videoView.start();
+                }
                 //Handle previous click here
             }
         });
@@ -73,11 +81,21 @@ public class StreamVideoActivity extends AppCompatActivity {
         videoView.start();
     }
 
-    private void initiateRV(ArrayList<Chapter> chaplist) {
+    private void initiateRV(ArrayList<Chapter> chaplist, int index) {
         RecyclerView rv_chapter = findViewById(R.id.rv_chapter);
-        ChapterAdapter chapterAdapter = new ChapterAdapter(this, chaplist);
+        ChapterAdapter chapterAdapter = new ChapterAdapter(this, chaplist, index,this);
         rv_chapter.setAdapter(chapterAdapter);
         rv_chapter.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @Override
+    public void onChapterClick(Chapter chapter, ImageView chapterImageView) {
+        chapterPointer = chaplist.indexOf(chapter);
+        initiateRV(chaplist, chapterPointer);
+        videoView.setVisibility(View.GONE);
+        videoView.setVideoPath(chaplist.get(chapterPointer).getData());
+        videoView.setVisibility(View.VISIBLE);
+        videoView.start();
     }
 
     @Override
