@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,8 @@ import android.widget.ImageView;
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.CategoryItemClickListener;
 import com.android.movie_application.models.Category;
-import com.android.movie_application.ui.MovieDetailActivity;
 import com.android.movie_application.ui.SearchedMovieActivity;
 import com.android.movie_application.adapters.CategoryAdapter;
-import com.android.movie_application.models.Movie;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +34,6 @@ import java.util.Random;
 
 public class SearchFragment extends Fragment implements CategoryItemClickListener {
 
-    private RecyclerView rv_movie_search;
     CategoryAdapter categoryAdapter;
     List<Category> lstCategory = new ArrayList<>();
 
@@ -76,7 +72,7 @@ public class SearchFragment extends Fragment implements CategoryItemClickListene
     }
 
     private void initiateRV(View view) {
-        rv_movie_search = view.findViewById(R.id.rv_searched_movie);
+        RecyclerView rv_movie_search = view.findViewById(R.id.rv_chapter);
         getAllCategory();
         categoryAdapter = new CategoryAdapter(getActivity(), lstCategory, SearchFragment.this);
         rv_movie_search.setAdapter(categoryAdapter);
