@@ -13,11 +13,16 @@ import com.android.movie_application.R;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView MovieThumbnailImg, MovieCoverImg;
     private TextView tv_title, tv_description;
     private FloatingActionButton play_fab;
+    private String movieTitle, movieCoverPhoto, movieThumbnail, movieDescription;
+    private ArrayList<String> chapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     void iniViews(){
         //get the data
-        String movieTitle = getIntent().getExtras().getString("title");
-        String movieCoverPhoto = getIntent().getExtras().getString("coverPhoto");
-        String movieThumbnail = getIntent().getExtras().getString("thumbnail");
+        movieTitle = getIntent().getExtras().getString("title");
+        movieCoverPhoto = getIntent().getExtras().getString("coverPhoto");
+        movieThumbnail = getIntent().getExtras().getString("thumbnail");
+        movieDescription = getIntent().getExtras().getString("description");
+        chapter = getIntent().getExtras().getStringArrayList("chapter");
+
+        System.out.println(chapter);
 
         play_fab = findViewById(R.id.play_fab);
         MovieThumbnailImg = findViewById(R.id.movie_detail_img);
@@ -43,8 +52,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         tv_title = findViewById(R.id.movie_detail_title);
         tv_title.setText(movieTitle);
         setTitle(movieTitle);
-
         tv_description = findViewById(R.id.movie_detail_desc);
+        tv_description.setText(movieDescription);
 
         //setup animation
         play_fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
@@ -53,6 +62,12 @@ public class MovieDetailActivity extends AppCompatActivity {
     public void stream(View view)
     {
         Intent intent = new Intent(MovieDetailActivity.this, StreamVideoActivity.class);
+        intent.putExtra("chapter", (Serializable) chapter);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.finish();
     }
 }

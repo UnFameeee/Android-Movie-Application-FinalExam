@@ -14,9 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.movie_application.R;
+import com.android.movie_application.adapters.CategoryItemClickListener;
 import com.android.movie_application.models.Category;
+import com.android.movie_application.ui.MovieDetailActivity;
 import com.android.movie_application.ui.SearchedMovieActivity;
 import com.android.movie_application.adapters.CategoryAdapter;
 import com.android.movie_application.models.Movie;
@@ -27,11 +30,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements CategoryItemClickListener {
 
     private RecyclerView rv_movie_search;
+    CategoryAdapter categoryAdapter;
+    List<Category> lstCategory = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,21 +52,7 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         //Recyclerview Setup
-        rv_movie_search = view.findViewById(R.id.rv_searched_movie);
-        List<Category> lstMovie = new ArrayList<>();
-//        lstMovie = getAllCategory();
-        lstMovie.add(new Category("Anime", Integer.toString(R.drawable.category_anime)));
-        lstMovie.add(new Category("Animal", Integer.toString(R.drawable.category_anime)));
-        lstMovie.add(new Category("Science", Integer.toString(R.drawable.category_anime)));
-        lstMovie.add(new Category("Food", Integer.toString(R.drawable.category_anime)));
-        lstMovie.add(new Category("Documentary", Integer.toString(R.drawable.category_anime)));
-        lstMovie.add(new Category("Popular", Integer.toString(R.drawable.category_anime)));
-
-        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), lstMovie);
-        rv_movie_search.setAdapter(categoryAdapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false);
-////        movieRV_2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rv_movie_search.setLayoutManager(layoutManager);
+        initiateRV(view);
 
         final EditText searchText = (EditText) view.findViewById(R.id.search_input);
         searchText.setOnKeyListener(new View.OnKeyListener() {
@@ -81,18 +75,46 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
+    private void initiateRV(View view) {
+        rv_movie_search = view.findViewById(R.id.rv_searched_movie);
+        getAllCategory();
+        categoryAdapter = new CategoryAdapter(getActivity(), lstCategory, SearchFragment.this);
+        rv_movie_search.setAdapter(categoryAdapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false);
+        rv_movie_search.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void onCateClick(Category category, ImageView cateImageView){
+        //Perform action
+        Intent intent = new Intent(getActivity(), SearchedMovieActivity.class);
+        intent.putExtra("searchValue", category.getTitle());
+        startActivity(intent);
+    }
+
     private void getAllCategory(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Movies");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
+                .child("Category");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String key = ds.getKey();
-                    Log.d("TAG", key);
+                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
+                    String key = idSnap.getKey();
                     assert key != null;
-                    Category category = ds.getValue(Category.class);
-//                    lstMovieShow.add(movie);
-//                    searchedMovieAdapter.notifyDataSetChanged();
+
+                    String thumbnail = "", title;
+
+                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
+                        if((Objects.equals(cateDS.getKey(), "thumbnail"))){
+                            thumbnail = cateDS.getValue(String.class);
+                        } else if((Objects.equals(cateDS.getKey(), "title"))){
+                            title = cateDS.getValue(String.class);
+                            Category category = new Category(title, thumbnail);
+                            lstCategory.add(category);
+                            Collections.shuffle(lstCategory, new Random());
+                            categoryAdapter.notifyDataSetChanged();
+                        }
+                    }
                 }
             }
 
