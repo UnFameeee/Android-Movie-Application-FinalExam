@@ -55,6 +55,14 @@ public class Movie {
 //        this.category = category;
 //    }
 
+    public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
+    {
+        this.title = title;
+        this.description = description;
+        this.coverPhoto = coverPhoto;
+        this.thumbnail = thumbnail;
+        this.streamingLink = streamingLink;
+    }
 
     public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
     {
