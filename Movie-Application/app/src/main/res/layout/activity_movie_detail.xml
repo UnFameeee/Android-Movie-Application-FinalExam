@@ -9,13 +9,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/movie_detail_cover"
-            android:scaleType="centerCrop"
             android:layout_width="wrap_content"
             android:layout_height="245dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#CCFFFFFF"
             android:clickable="true"
+            android:onClick="stream"
             android:src="@drawable/ic_play_arrow"
             app:backgroundTint="#000000"
             app:layout_constraintBottom_toBottomOf="@+id/movie_detail_cover"
@@ -57,7 +58,6 @@
             app:srcCompat="@drawable/jujutsu_kaisen" />
 
         <TextView
-            android:textColor="@color/white"
             android:id="@+id/movie_detail_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,10 +65,30 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toEndOf="@+id/movie_detail_img"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_cover" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/button"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="19dp"-->
+        <!--            android:layout_marginTop="4dp"-->
+        <!--            android:layout_marginEnd="140dp"-->
+        <!--            android:backgroundTint="@color/blue"-->
+        <!--            android:text="@string/watch"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="20dp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            -->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.085"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/movie_detail_img"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/movie_detail_title" />-->
 
         <TextView
             android:id="@+id/movie_detail_desc"
@@ -86,23 +106,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_img" />
 
-        <Button
-            android:id="@+id/button"
+        <TextView
+            android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="140dp"
-            android:backgroundTint="@color/blue"
-            android:text="@string/watch"
-            android:textColor="@color/white"
-            android:textSize="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/title_4"
+            android:textColor="@color/yellow_primary"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:onClick="stream"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_desc" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_movie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
-            app:layout_constraintStart_toEndOf="@+id/movie_detail_img"
-            app:layout_constraintTop_toBottomOf="@+id/movie_detail_title" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
