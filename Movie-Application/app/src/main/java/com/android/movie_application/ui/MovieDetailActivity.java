@@ -48,6 +48,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        getSupportActionBar().hide();
 
         //initiate views
         iniViews();

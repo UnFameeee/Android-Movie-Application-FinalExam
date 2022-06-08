@@ -30,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().hide();
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
