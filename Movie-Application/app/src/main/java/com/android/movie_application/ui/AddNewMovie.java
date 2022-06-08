@@ -291,19 +291,14 @@ public class AddNewMovie extends AppCompatActivity {
         DatabaseReference dbReference;
         dbReference = FirebaseDatabase.getInstance().getReference("Database").child("Category");
         Query query = dbReference.orderByChild("title").equalTo(category);
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Map<String,Object> mapData = new HashMap<>();
-                mapData.put("movies",movie);
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
-                    dbReference.child(dataSnapshot.getKey()).updateChildren(mapData, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                            Toast.makeText(AddNewMovie.this,"Upload Movie Successfully",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    String key = dbReference.child(dataSnapshot.getKey()).child("movies").push().getKey();
+                    dbReference.child(dataSnapshot.getKey()).child("movies").child(key).setValue(movie);
+                    Toast.makeText(AddNewMovie.this, "Add new movie successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
 
