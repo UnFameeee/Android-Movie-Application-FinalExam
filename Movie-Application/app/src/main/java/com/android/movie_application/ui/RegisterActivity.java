@@ -40,6 +40,27 @@ public class RegisterActivity extends AppCompatActivity
         editTextRepass = (EditText) findViewById(R.id.editTextRepass);
         radioButtonAdmin = (RadioButton) findViewById(R.id.radioButtonAdmin);
         radioButtonUser = (RadioButton) findViewById(R.id.radioButtonUser);
+
+
+        radioButtonAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (radioButtonUser.isChecked())
+                {
+                    radioButtonUser.setChecked(false);
+                }
+            }
+        });
+
+        radioButtonUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (radioButtonAdmin.isChecked())
+                {
+                    radioButtonAdmin.setChecked(false);
+                }
+            }
+        });
     }
 
     public void register(View view)
