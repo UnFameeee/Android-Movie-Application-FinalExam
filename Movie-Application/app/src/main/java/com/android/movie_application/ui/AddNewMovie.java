@@ -52,6 +52,7 @@ public class AddNewMovie extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         //Use view binding to create the subclass of AddNewMovie with all the view attributes
         activityAddMovieBinding = ActivityAddMovieBinding.inflate(getLayoutInflater());
         setContentView(activityAddMovieBinding.getRoot());

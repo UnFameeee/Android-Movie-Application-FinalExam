@@ -32,12 +32,13 @@ public class StreamVideoActivity extends AppCompatActivity implements ChapterIte
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stream_video_activity);
+        getSupportActionBar().hide();
 
         chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
-        System.out.println(chaplist.get(0).getTitle());
         String movieName = getIntent().getExtras().getString("movieTitle");
 
-        initiateRV(chaplist, 0);
+        if(chapterPointer == 0)
+            initiateRV(chaplist, 0);
 
         TextView movieTitle = findViewById(R.id.textViewTitle);
         movieTitle.setText(movieName);

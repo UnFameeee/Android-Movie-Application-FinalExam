@@ -44,6 +44,7 @@ public class SearchedMovieActivity extends AppCompatActivity implements MovieIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searched_movie);
+        getSupportActionBar().hide();
 
         //var from getting search value
         Intent intent = getIntent();
