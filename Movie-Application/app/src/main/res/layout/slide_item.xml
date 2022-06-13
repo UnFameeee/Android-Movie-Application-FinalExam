@@ -29,10 +29,9 @@
         app:srcCompat="@drawable/gradient_bg" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/float_acc_btn_play"
+        android:id="@+id/float_acc_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/slide_img"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +54,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/float_acc_btn_play"
         app:layout_constraintVertical_bias="0.483" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--        android:clickable="true"-->

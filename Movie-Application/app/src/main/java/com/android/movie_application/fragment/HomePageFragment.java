@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieAdapter;
 import com.android.movie_application.adapters.MovieItemClickListener;
+import com.android.movie_application.adapters.SlideMovieItemClickListener;
 import com.android.movie_application.adapters.SliderPagerAdapter;
-import com.android.movie_application.models.Category;
 import com.android.movie_application.models.Chapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
@@ -33,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -41,11 +40,10 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomePageFragment extends Fragment implements MovieItemClickListener {
-
-    private List<Slide> listslide;
+public class HomePageFragment extends Fragment implements MovieItemClickListener, SlideMovieItemClickListener {
     private ViewPager sliderpaper;
 
+    SliderPagerAdapter adapter;
     List<Movie> lstMovie = new ArrayList<>();
     List<Movie> lstMovie2 = new ArrayList<>();
     List<Movie> lstMovie3 = new ArrayList<>();
@@ -62,9 +60,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
-        //Slider pager and Indicator Setup
-        initiateSlider(view);
-
         //Recyclerview Setup
         initiateRV1(view);
 
@@ -74,19 +69,16 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         //Recyclerview Setup
         initiateRV3(view);
 
+        //Slider pager and Indicator Setup
+        initiateSlider(view);
+
         // Inflate the layout for this fragment
         return view;
     }
 
     private void initiateSlider(View view) {
-        sliderpaper = view.findViewById(R.id.silder_paper);
-        listslide = new ArrayList<>();
-        listslide.add(new Slide(R.drawable.parasyte_lofi, "Parasyte"));
-        listslide.add(new Slide(R.drawable.one_punch_man_lofi, "One Punch Man"));
-        listslide.add(new Slide(R.drawable.demon_slayer_lofi, "Demon Slayer"));
-        listslide.add(new Slide(R.drawable.my_hero_academy_lofi, "My Hero Academy"));
-        listslide.add(new Slide(R.drawable.fire_force_lofi, "Fire Force"));
-        SliderPagerAdapter adapter = new SliderPagerAdapter(getActivity(), listslide) ;
+        sliderpaper = view.findViewById(R.id.slider_paper);
+        adapter = new SliderPagerAdapter(getActivity(), lstMovie2, this) ;
         sliderpaper.setAdapter(adapter);
         //Set up time for changing the theme
         Timer timer = new Timer();
@@ -96,6 +88,21 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         indicator.setupWithViewPager(sliderpaper, true);
     }
 
+    @Override
+    public void onSlideMovieClick(Movie movie, ImageView movieImageView) {
+        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("category", movie.getCategory());
+        intent.putExtra("thumbnail", movie.getThumbnail());
+        intent.putExtra("coverPhoto",movie.getCoverPhoto());
+        intent.putExtra("description", movie.getDescription());
+
+        ArrayList<Chapter> chapList = movie.getChapter();
+        intent.putExtra("chapterList", chapList);
+        startActivity(intent);
+    }
+
     class SliderTimer extends TimerTask {
         @Override
         public void run() {
@@ -103,7 +110,8 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                 getActivity().runOnUiThread(new Runnable(){
                     @Override
                     public void run(){
-                        if(sliderpaper.getCurrentItem() < (listslide.size() - 1)){
+                        if(lstMovie2 == null) return;
+                        if(sliderpaper.getCurrentItem() < (adapter.limit - 1)){
                             sliderpaper.setCurrentItem(sliderpaper.getCurrentItem()+1);
                         }
                         else
@@ -133,7 +141,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
             tv.setVisibility(View.GONE);
         }
 
-        movieAdapter = new MovieAdapter(getActivity(), lstMovie,HomePageFragment.this);
+        movieAdapter = new MovieAdapter(getActivity(), lstMovie,HomePageFragment.this, 0);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 //        System.out.println("out: " + cateSingle.size());
@@ -142,7 +150,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     private void initiateRV2(View view) {
         RecyclerView movieRV2 = view.findViewById((R.id.rv_movie2));
         getAllMovies(lstMovie2);
-        movie2Adapter = new MovieAdapter(getActivity(), lstMovie2, HomePageFragment.this);
+        movie2Adapter = new MovieAdapter(getActivity(), lstMovie2, HomePageFragment.this, 0);
         movieRV2.setAdapter(movie2Adapter);
         movieRV2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
     }
@@ -150,7 +158,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     private void initiateRV3(View view) {
         RecyclerView movieRV3 = view.findViewById((R.id.rv_movie3));
         getAllMovies(lstMovie3);
-        movie3Adapter = new MovieAdapter(getActivity(), lstMovie3, HomePageFragment.this);
+        movie3Adapter = new MovieAdapter(getActivity(), lstMovie3, HomePageFragment.this, 10);
         movieRV3.setAdapter(movie3Adapter);
         movieRV3.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
     }
@@ -292,12 +300,18 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
                                         Collections.shuffle(lstMovie, new Random());
                                         movie2Adapter.notifyDataSetChanged();
                                         movie3Adapter.notifyDataSetChanged();
+                                        adapter.notifyDataSetChanged();
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
+
+            @Override
+            protected void finalize() throws Throwable {
+                super.finalize();
             }
 
             @Override

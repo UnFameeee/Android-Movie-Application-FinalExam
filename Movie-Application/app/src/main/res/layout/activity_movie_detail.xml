@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="@+id/movie_detail_cover" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/play_fab"
+            android:id="@+id/play_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#CCFFFFFF"

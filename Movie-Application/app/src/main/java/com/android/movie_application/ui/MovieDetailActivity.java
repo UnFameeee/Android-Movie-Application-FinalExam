@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import com.android.movie_application.R;
 import com.android.movie_application.adapters.MovieAdapter;
 import com.android.movie_application.adapters.MovieItemClickListener;
-import com.android.movie_application.fragment.HomePageFragment;
 import com.android.movie_application.models.Chapter;
 import com.android.movie_application.models.Movie;
 import com.bumptech.glide.Glide;
@@ -28,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,7 +59,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private void initiateRV(String category) {
         RecyclerView movieRV = findViewById((R.id.rv_movie));
         getAllMoviesByCate(movieCategory, lstMovie, tv_title.getText().toString());
-        movieAdapter = new MovieAdapter(this, lstMovie, this);
+        movieAdapter = new MovieAdapter(this, lstMovie, this, 0);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
@@ -98,7 +95,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         movieDescription = getIntent().getExtras().getString("description");
         chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
 
-        play_fab = findViewById(R.id.play_fab);
+        play_fab = findViewById(R.id.play_current);
         MovieThumbnailImg = findViewById(R.id.movie_detail_img);
         Glide.with(this).load(movieThumbnail).into(MovieThumbnailImg);
         MovieCoverImg = findViewById(R.id.movie_detail_cover);

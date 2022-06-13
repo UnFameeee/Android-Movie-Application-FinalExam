@@ -21,13 +21,14 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
     Context context;
     List<Movie> mData;
-
+    private int limit;
     MovieItemClickListener movieItemClickListener;
 
-    public MovieAdapter(Context context, List<Movie> mData, MovieItemClickListener listener) {
+    public MovieAdapter(Context context, List<Movie> mData, MovieItemClickListener listener, int limit) {
         this.context = context;
         this.mData = mData;
         this.movieItemClickListener = listener;
+        this.limit = limit;
     }
 
     @NonNull
@@ -49,7 +50,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if(limit > 0)
+            return Math.min(mData.size(), limit);
+        else
+            return mData.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

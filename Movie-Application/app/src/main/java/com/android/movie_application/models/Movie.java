@@ -8,24 +8,16 @@ public class Movie {
     private String description;
     private String thumbnail;
     private String category;
-    private String rating;
-    private String streamingLink;
     private String coverPhoto;
-
     public ArrayList<Chapter> chapter;
 
-    public Movie()
-    {
+    private String rating;
+    private String streamingLink;
+
+
+    public Movie() {
 
     }
-
-//    public Movie(String title, String thumbnail, String coverPhoto, String description, ArrayList<Chapter> chapter) {
-//        this.title = title;
-//        this.chapter = chapter;
-//        this.thumbnail = thumbnail;
-//        this.coverPhoto = coverPhoto;
-//        this.description = description;
-//    }
 
     public Movie(String title, String category, String thumbnail, String coverPhoto, String description, ArrayList<Chapter> chapter) {
         this.title = title;
@@ -37,8 +29,7 @@ public class Movie {
     }
 
 
-    public Movie(String title, String thumbnail)
-    {
+    public Movie(String title, String thumbnail) {
         this.thumbnail = thumbnail;
         this.title = title;
     }
