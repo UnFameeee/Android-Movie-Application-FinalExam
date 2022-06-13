@@ -49,7 +49,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     List<Movie> lstMovie = new ArrayList<>();
     List<Movie> lstMovie2 = new ArrayList<>();
     List<Movie> lstMovie3 = new ArrayList<>();
-    List<Category> lstCategory = new ArrayList<>();
     MovieAdapter movieAdapter;
     MovieAdapter movie2Adapter;
     MovieAdapter movie3Adapter;
@@ -62,8 +61,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-
-//        getAllCategory();
 
         //Slider pager and Indicator Setup
         initiateSlider(view);
@@ -119,21 +116,27 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
 
     private void initiateRV1(View view) {
         RecyclerView movieRV = view.findViewById((R.id.rv_movie));
-        ArrayList<String> cate = new ArrayList<>(Arrays.asList("Anime", "Lofi", "Gamejams", "Devlog", "Review"));
-        List<Category> cateSingle = CategorySingleton.getInstance().getAllCategory();
-        if(cateSingle != null){
-            System.out.println("in: " + cateSingle.size());
+//        ArrayList<String> cate = new ArrayList<>(Arrays.asList("Anime", "Lofi", "Gamejams", "Devlog", "Review"));
+        List<String> cateSingle = CategorySingleton.getInstance().lstCateSingleton;
+
+        TextView tv = view.findViewById(R.id.tvCate);
+
+        if(cateSingle.size() != 0){
+            tv.setVisibility(View.VISIBLE);
+            System.out.println("in: " + cateSingle.get(0));
             Collections.shuffle(cateSingle, new Random());
+            tv.setText(cateSingle.get(0));
+            getAllMoviesByCate(cateSingle.get(0), lstMovie);
+
+            System.out.println("in: " + lstMovie);
+        }else {
+            tv.setVisibility(View.GONE);
         }
 
-        System.out.println("out: " + cateSingle.size());
-
-        TextView tv =  view.findViewById(R.id.tvCate);
-        tv.setText(cate.get(0));
-        getAllMoviesByCate(cate.get(0), lstMovie);
         movieAdapter = new MovieAdapter(getActivity(), lstMovie,HomePageFragment.this);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//        System.out.println("out: " + cateSingle.size());
     }
 
     private void initiateRV2(View view) {
@@ -236,44 +239,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
             }
         });
     }
-
-//    private void getAllCategory(){
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
-//                .child("Category");
-//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
-//                    String key = idSnap.getKey();
-//                    assert key != null;
-//
-//                    String thumbnail = "", title;
-//
-//                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
-//                        if((Objects.equals(cateDS.getKey(), "thumbnail"))){
-//                            thumbnail = cateDS.getValue(String.class);
-//                        } else if((Objects.equals(cateDS.getKey(), "title"))){
-//                            title = cateDS.getValue(String.class);
-//                            Category category = new Category(title, thumbnail);
-//                            lstCategory.add(category);
-//                            Collections.shuffle(lstCategory, new Random());
-//                        }
-//                    }
-//                }
-////                try {
-////
-////                    refresh.call();
-////                } catch (Exception e) {
-////                    e.printStackTrace();
-////                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     private void getAllMovies(List<Movie> lstMovie){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
