@@ -3,6 +3,7 @@ package com.android.movie_application.ui;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -30,7 +31,8 @@ public class RegisterActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
