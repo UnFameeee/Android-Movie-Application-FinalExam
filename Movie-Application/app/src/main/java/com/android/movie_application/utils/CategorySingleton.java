@@ -14,10 +14,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CategorySingleton {
+    public List<String> lstCateSingleton = new ArrayList<>();
 
     private CategorySingleton(){
+        getAllCategory();
     }
 
     public static CategorySingleton getInstance(){
@@ -28,26 +31,22 @@ public class CategorySingleton {
         private static final CategorySingleton INSTANCE = new CategorySingleton();
     }
 
-    public List<Category> getAllCategory(){
-        List<Category> lstCateSingleton = new ArrayList<>();
+    public void getAllCategory(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Database")
                 .child("Category");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot idSnap : dataSnapshot.getChildren()) {
+                for (DataSnapshot idSnap : dataSnapshot.getChildren()) {
                     String key = idSnap.getKey();
                     assert key != null;
 
-                    String thumbnail = "", title;
+                    String title;
 
-                    for(DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
-                        if((Objects.equals(cateDS.getKey(), "thumbnail"))){
-                            thumbnail = cateDS.getValue(String.class);
-                        } else if((Objects.equals(cateDS.getKey(), "title"))){
+                    for (DataSnapshot cateDS : dataSnapshot.child(key).getChildren()) {
+                            if ((Objects.equals(cateDS.getKey(), "title"))) {
                             title = cateDS.getValue(String.class);
-                            Category category = new Category(title, thumbnail);
-                            lstCateSingleton.add(category);
+                            lstCateSingleton.add(title);
                             Collections.shuffle(lstCateSingleton, new Random());
 //                            categoryAdapter.notifyDataSetChanged();
                         }
@@ -55,13 +54,10 @@ public class CategorySingleton {
                 }
             }
 
-
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-        return lstCateSingleton;
     }
 }
