@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -52,7 +53,8 @@ public class AddNewMovie extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //Use view binding to create the subclass of AddNewMovie with all the view attributes
         activityAddMovieBinding = ActivityAddMovieBinding.inflate(getLayoutInflater());
         setContentView(activityAddMovieBinding.getRoot());

@@ -24,6 +24,7 @@ import com.android.movie_application.models.Chapter;
 import com.android.movie_application.models.Movie;
 import com.android.movie_application.models.Slide;
 import com.android.movie_application.ui.MovieDetailActivity;
+import com.android.movie_application.utils.CategorySingleton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -119,7 +120,14 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
     private void initiateRV1(View view) {
         RecyclerView movieRV = view.findViewById((R.id.rv_movie));
         ArrayList<String> cate = new ArrayList<>(Arrays.asList("Anime", "Lofi", "Gamejams", "Devlog", "Review"));
-        Collections.shuffle(cate, new Random());
+        List<Category> cateSingle = CategorySingleton.getInstance().getAllCategory();
+        if(cateSingle != null){
+            System.out.println("in: " + cateSingle.size());
+            Collections.shuffle(cateSingle, new Random());
+        }
+
+        System.out.println("out: " + cateSingle.size());
+
         TextView tv =  view.findViewById(R.id.tvCate);
         tv.setText(cate.get(0));
         getAllMoviesByCate(cate.get(0), lstMovie);

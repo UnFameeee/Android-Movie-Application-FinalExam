@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -32,7 +33,8 @@ public class StreamVideoActivity extends AppCompatActivity implements ChapterIte
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stream_video_activity);
-        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         chaplist = (ArrayList<Chapter>) getIntent().getSerializableExtra("chapterList");
         String movieName = getIntent().getExtras().getString("movieTitle");
