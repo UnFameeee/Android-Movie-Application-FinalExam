@@ -43,7 +43,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
         myViewHolder.TvTitle.setText(mData.get(position).getTitle());
         if(position == index){
             myViewHolder.TvTitle.setTextColor(Color.rgb(242,229,78));
-        }
+        }else
+            myViewHolder.TvTitle.setTextColor(Color.rgb(255,255,255));
 //        myViewHolder.data = (mData.get(position).getData());
         Uri uri = Uri.parse(mData.get(position).getThumbnail());
 //        myViewHolder.ImgMovie.setImageURI(uri);

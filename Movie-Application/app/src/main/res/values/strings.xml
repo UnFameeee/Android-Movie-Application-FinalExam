@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">finalProject</string>
+    <string name="app_name">Movie Night</string>
 
     <!--  Main layout  -->
     <string name="title_1">Top Originals and Exclusives</string>
