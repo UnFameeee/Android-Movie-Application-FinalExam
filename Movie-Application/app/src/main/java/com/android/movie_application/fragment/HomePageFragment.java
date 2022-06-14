@@ -22,7 +22,6 @@ import com.android.movie_application.adapters.SlideMovieItemClickListener;
 import com.android.movie_application.adapters.SliderPagerAdapter;
 import com.android.movie_application.models.Chapter;
 import com.android.movie_application.models.Movie;
-import com.android.movie_application.models.Slide;
 import com.android.movie_application.ui.MovieDetailActivity;
 import com.android.movie_application.utils.CategorySingleton;
 import com.google.android.material.tabs.TabLayout;
@@ -82,7 +81,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         sliderpaper.setAdapter(adapter);
         //Set up time for changing the theme
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 2000, 4000);
+        timer.scheduleAtFixedRate(new SliderTimer(), 2500, 4500);
         //Setup indicator
         TabLayout indicator = view.findViewById(R.id.indicator);
         indicator.setupWithViewPager(sliderpaper, true);
@@ -124,9 +123,7 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
 
     private void initiateRV1(View view) {
         RecyclerView movieRV = view.findViewById((R.id.rv_movie));
-//        ArrayList<String> cate = new ArrayList<>(Arrays.asList("Anime", "Lofi", "Gamejams", "Devlog", "Review"));
         List<String> cateSingle = CategorySingleton.getInstance().lstCateSingleton;
-
         TextView tv = view.findViewById(R.id.tvCate);
 
         if(cateSingle.size() != 0){
@@ -135,8 +132,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
             Collections.shuffle(cateSingle, new Random());
             tv.setText(cateSingle.get(0));
             getAllMoviesByCate(cateSingle.get(0), lstMovie);
-
-            System.out.println("in: " + lstMovie);
         }else {
             tv.setVisibility(View.GONE);
         }
@@ -144,7 +139,6 @@ public class HomePageFragment extends Fragment implements MovieItemClickListener
         movieAdapter = new MovieAdapter(getActivity(), lstMovie,HomePageFragment.this, 0);
         movieRV.setAdapter(movieAdapter);
         movieRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//        System.out.println("out: " + cateSingle.size());
     }
 
     private void initiateRV2(View view) {
