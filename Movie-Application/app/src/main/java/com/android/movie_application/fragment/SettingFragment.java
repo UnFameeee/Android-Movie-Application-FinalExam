@@ -31,10 +31,8 @@ public class SettingFragment extends Fragment {
         textViewAddMovie = (TextView) view.findViewById(R.id.textViewAddMovie);
         textViewYourMovies = (TextView) view.findViewById(R.id.textViewListMovies);
         textViewAddChapter = (TextView) view.findViewById(R.id.textViewAddChapter);
-//        textViewAddMovie.setVisibility(View.INVISIBLE);
-        textViewAddMovie.setVisibility(View.VISIBLE);
-//        textViewYourMovies.setVisibility(View.INVISIBLE);
-        textViewYourMovies.setVisibility(View.VISIBLE);
+        textViewAddMovie.setVisibility(View.INVISIBLE);
+        textViewYourMovies.setVisibility(View.INVISIBLE);
         textViewAddChapter.setVisibility(View.INVISIBLE);
         if (getArguments() != null)
         {
