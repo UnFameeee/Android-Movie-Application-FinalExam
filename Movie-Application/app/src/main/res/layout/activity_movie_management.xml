@@ -13,7 +13,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/border_bottom"
         android:padding="10dp"
-        android:text="UPLOAD NEW MOVIE"
+        android:text="YOUR MOVIE'S DETAILS"
         android:textAlignment="center"
         android:textColor="#FFB700"
         android:textSize="25dp"
@@ -246,12 +246,12 @@
         app:srcCompat="@drawable/border" />
 
     <Button
-        android:id="@+id/buttonConfirmUploadMovie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/buttonConfirmUpdateMovie"
+        android:layout_width="284dp"
+        android:layout_height="52dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/yellow_primary"
-        android:text="ADD THIS MOVIE"
+        android:text="UPDATE THIS MOVIE"
         android:textSize="23dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
