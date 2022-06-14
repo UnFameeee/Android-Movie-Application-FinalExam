@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.movie_application.R;
 import com.android.movie_application.ui.AddNewMovie;
+import com.android.movie_application.ui.ViewMovieItems;
 
 public class SettingFragment extends Fragment {
 
@@ -26,12 +27,14 @@ public class SettingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        TextView textViewAddMovie, textViewAddCategory, textViewAddChapter;
+        TextView textViewAddMovie, textViewYourMovies, textViewAddChapter;
         textViewAddMovie = (TextView) view.findViewById(R.id.textViewAddMovie);
-        textViewAddCategory = (TextView) view.findViewById(R.id.textViewAddCategory);
+        textViewYourMovies = (TextView) view.findViewById(R.id.textViewListMovies);
         textViewAddChapter = (TextView) view.findViewById(R.id.textViewAddChapter);
-        textViewAddMovie.setVisibility(View.INVISIBLE);
-        textViewAddCategory.setVisibility(View.INVISIBLE);
+//        textViewAddMovie.setVisibility(View.INVISIBLE);
+        textViewAddMovie.setVisibility(View.VISIBLE);
+//        textViewYourMovies.setVisibility(View.INVISIBLE);
+        textViewYourMovies.setVisibility(View.VISIBLE);
         textViewAddChapter.setVisibility(View.INVISIBLE);
         if (getArguments() != null)
         {
@@ -40,7 +43,7 @@ public class SettingFragment extends Fragment {
         if (role.equals("admin"))
         {
             textViewAddMovie.setVisibility(View.VISIBLE);
-            textViewAddCategory.setVisibility(View.VISIBLE);
+            textViewYourMovies.setVisibility(View.VISIBLE);
             textViewAddChapter.setVisibility(View.VISIBLE);
         }
 
@@ -53,6 +56,15 @@ public class SettingFragment extends Fragment {
                startActivity(intent);
            }
        });
+
+
+        textViewYourMovies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ViewMovieItems.class);
+                startActivity(intent);
+            }
+        });
 
 //        return inflater.inflate(R.layout.fragment_setting, container, false);
         return view;

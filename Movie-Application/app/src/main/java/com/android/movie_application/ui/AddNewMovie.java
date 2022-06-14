@@ -33,7 +33,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -288,8 +290,12 @@ public class AddNewMovie extends AppCompatActivity {
 
     }
 
-    private void uploadMovieByTitle(String title) {
-        Movie movie = new Movie(title, description, coverPhoto, thumbnail, streamingLink);
+    private void uploadMovieByTitle(String title)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String createdDate = formatter.format(date);
+        Movie movie = new Movie(title, description, coverPhoto, thumbnail, streamingLink, createdDate);
         String categoryKey = "";
         DatabaseReference dbReference;
         dbReference = FirebaseDatabase.getInstance().getReference("Database").child("Category");

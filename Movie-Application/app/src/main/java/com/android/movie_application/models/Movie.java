@@ -1,16 +1,17 @@
 package com.android.movie_application.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie {
+public class Movie implements Serializable {
     private String title;
     private String description;
     private String thumbnail;
     private String category;
     private String coverPhoto;
     public ArrayList<Chapter> chapter;
-
+    public String createdDate;
     private String rating;
     private String streamingLink;
 
@@ -35,13 +36,33 @@ public class Movie {
     }
 
 
-    public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink)
+    public Movie(String title, String description, String coverPhoto, String thumbnail, String streamingLink, String createdDate)
     {
         this.title = title;
+        this.category = category;
         this.description = description;
         this.coverPhoto = coverPhoto;
         this.thumbnail = thumbnail;
         this.streamingLink = streamingLink;
+        this.createdDate = createdDate;
+    }
+
+    public Movie(String title, String category, String description, String coverPhoto, String thumbnail, String streamingLink, String createdDate)
+    {
+        this.title = title;
+        this.category = category;
+        this.description = description;
+        this.coverPhoto = coverPhoto;
+        this.thumbnail = thumbnail;
+        this.streamingLink = streamingLink;
+        this.createdDate = createdDate;
+    }
+
+    public Movie(String title, String category, String createdDate)
+    {
+        this.title = title;
+        this.category = category;
+        this.createdDate = createdDate;
     }
 
     public ArrayList<Chapter> getChapter() {
@@ -106,5 +127,13 @@ public class Movie {
 
     public void setStreamingLink(String streamingLink) {
         this.streamingLink = streamingLink;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 }
